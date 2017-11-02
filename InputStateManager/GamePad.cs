@@ -25,12 +25,12 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
-using InputStateManager.Helpers;
+using Inputs.Helpers;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace InputStateManager
+namespace Inputs
 {
     [PublicAPI]
     public class GamePad

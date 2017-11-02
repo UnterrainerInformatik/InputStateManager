@@ -28,7 +28,7 @@
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Input;
 
-namespace InputStateManager
+namespace Inputs
 {
     [PublicAPI]
     public class Keyboard

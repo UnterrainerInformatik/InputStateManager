@@ -27,7 +27,7 @@
 
 using JetBrains.Annotations;
 
-namespace InputStateManager
+namespace Inputs
 {
     [PublicAPI]
     public class InputStateManager

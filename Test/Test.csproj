@@ -43,6 +43,9 @@
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Test.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
@@ -71,9 +74,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InputStateManager\InputStateManager.csproj">
+    <ProjectReference Include="..\InputStateManager\Inputs.csproj">
       <Project>{48D4510A-1D34-4F2F-B8D1-72617109B28F}</Project>
-      <Name>InputStateManager</Name>
+      <Name>Inputs</Name>
     </ProjectReference>
   </ItemGroup>
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->

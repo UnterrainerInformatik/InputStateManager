@@ -7,8 +7,8 @@
     <ProjectGuid>{48D4510A-1D34-4F2F-B8D1-72617109B28F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InputStateManager</RootNamespace>
-    <AssemblyName>InputStateManager</AssemblyName>
+    <RootNamespace>Inputs</RootNamespace>
+    <AssemblyName>Inputs</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
