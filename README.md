@@ -11,6 +11,10 @@ In order to get help with basic GIT commands you may try [the GIT cheat-sheet][c
 This repository located on our  [homepage][homepage] is private since this is the master- and release-branch. You may clone it, but it will be read-only.  
 If you want to contribute to our repository (push, open pull requests), please use the copy on github located here: [the public github repository][github]  
 
+We accept pull requests!
+
+**If you like this repo, don't forget to star it!**
+
 # ![Icon](https://github.com/UnterrainerInformatik/InputStateManager/raw/master/icon.png)InputStateManager
 
 This is a helper class for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.
