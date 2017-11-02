@@ -64,6 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="x64\SDL2.dll" />
+    <Content Include="x64\soft_oal.dll" />
+    <Content Include="x86\SDL2.dll" />
+    <Content Include="x86\soft_oal.dll" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
@@ -73,6 +77,10 @@
     <None Include="Content\AnonymousPro8.spritefont" />
     <None Include="MonoGame.Framework.dll.config" />
     <None Include="packages.config" />
+    <None Include="x64\libopenal.so.1" />
+    <None Include="x64\libSDL2-2.0.so.0" />
+    <None Include="x86\libopenal.so.1" />
+    <None Include="x86\libSDL2-2.0.so.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InputStateManager\Inputs.csproj">
