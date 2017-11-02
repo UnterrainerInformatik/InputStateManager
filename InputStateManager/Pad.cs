@@ -34,7 +34,7 @@ using Microsoft.Xna.Framework.Input;
 namespace Inputs
 {
     [PublicAPI]
-    public class GamePad
+    public class Pad
     {
         public enum DPadDirection
         {
@@ -58,7 +58,7 @@ namespace Inputs
         /// </summary>
         public WasSub Was { get; }
 
-        internal GamePad()
+        internal Pad()
         {
             Is = new IsSub(GamePadStates.Get, GamePadStates.GetOld);
             Was = new WasSub(GamePadStates.GetOld);

@@ -30,7 +30,6 @@ using Inputs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using GamePad = Inputs.GamePad;
 using Mouse = Inputs.Mouse;
 
 namespace Test
@@ -85,7 +84,7 @@ namespace Test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (input.GamePad.Is.Press(Buttons.Back) || input.Keyboard.Is.Press(Keys.Escape))
+            if (input.Pad.Is.Press(Buttons.Back) || input.Key.Is.Press(Keys.Escape))
                 Exit();
             input.Update();
             base.Update(gameTime);
@@ -118,8 +117,8 @@ namespace Test
             b.Append($"Mouse Button Right Down: {input.Mouse.Is.Down(Mouse.Button.RIGHT)} " +
                      $"Pressed: {input.Mouse.Is.Press(Mouse.Button.RIGHT)} " +
                      $"Released: {input.Mouse.Is.Release(Mouse.Button.RIGHT)}\n");
-            b.Append($"GamePad: {input.GamePad.Is.DPad.Down(GamePad.DPadDirection.UP)}\n");
-
+            b.Append($"GamePad: {input.Pad.Is.DPad.Down(Pad.DPadDirection.UP)}\n");
+            
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.DrawString(font, b, new Vector2(10, 10), Color.White);
             spriteBatch.End();

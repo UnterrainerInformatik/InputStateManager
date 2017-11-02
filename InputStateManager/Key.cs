@@ -32,7 +32,7 @@ using Microsoft.Xna.Framework.Input;
 namespace Inputs
 {
     [PublicAPI]
-    public class Keyboard
+    public class Key
     {
         public KeyboardState OldState { get; set; }
         public KeyboardState State { get; set; }
@@ -47,7 +47,7 @@ namespace Inputs
         /// </summary>
         public WasSub Was { get; }
 
-        internal Keyboard()
+        internal Key()
         {
             Is = new IsSub(GetState, GetOldState);
             Was = new WasSub(GetOldState);
@@ -59,7 +59,7 @@ namespace Inputs
         internal void Update()
         {
             OldState = State;
-            State = Microsoft.Xna.Framework.Input.Keyboard.GetState();
+            State = Keyboard.GetState();
         }
 
         [PublicAPI]
@@ -76,6 +76,20 @@ namespace Inputs
 
             public bool Press(Keys key) => State().IsKeyDown(key) && OldState().IsKeyUp(key);
             public bool Release(Keys key) => OldState().IsKeyDown(key) && State().IsKeyUp(key);
+
+            public bool ShiftPress => Press(Keys.LeftShift) || Press(Keys.RightShift);
+            public bool CtrlPress => Press(Keys.LeftControl) || Press(Keys.RightControl);
+            public bool AltPress => Press(Keys.LeftAlt) || Press(Keys.RightAlt);
+
+            public bool ShiftRelease => Release(Keys.LeftShift) && Release(Keys.RightShift);
+            public bool CtrlRelease => Release(Keys.LeftControl) && Release(Keys.RightControl);
+            public bool AltRelease => Release(Keys.LeftAlt) && Release(Keys.RightAlt);
+
+            public bool NumLockPress => State().NumLock && !OldState().NumLock;
+            public bool NumLockRelease => !State().NumLock && OldState().NumLock;
+
+            public bool CapsLockPress => State().CapsLock && !OldState().CapsLock;
+            public bool CapsLockRelease => !State().CapsLock && OldState().CapsLock;
         }
 
         [PublicAPI]
@@ -94,6 +108,9 @@ namespace Inputs
             public bool ShiftDown => Down(Keys.LeftShift) || Down(Keys.RightShift);
             public bool CtrlDown => Down(Keys.LeftControl) || Down(Keys.RightControl);
             public bool AltDown => Down(Keys.LeftAlt) || Down(Keys.RightAlt);
+            public bool ShiftUp => Up(Keys.LeftShift) && Up(Keys.RightShift);
+            public bool CtrlUp => Up(Keys.LeftControl) && Up(Keys.RightControl);
+            public bool AltUp => Up(Keys.LeftAlt) && Up(Keys.RightAlt);
             public bool NumLock => State().NumLock;
             public bool CapsLock => State().CapsLock;
             public Keys[] GetPressedKeys => State().GetPressedKeys();

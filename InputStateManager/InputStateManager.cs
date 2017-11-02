@@ -33,15 +33,15 @@ namespace Inputs
     public class InputStateManager
     {
         public Mouse Mouse { get; } = new Mouse();
-        public GamePad GamePad { get; } = new GamePad();
-        public Keyboard Keyboard { get; } = new Keyboard();
+        public Pad Pad { get; } = new Pad();
+        public Key Key { get; } = new Key();
         public Touch Touch { get; } = new Touch();
 
         public void Update()
         {
             Mouse.Update();
-            Keyboard.Update();
-            GamePad.Update();
+            Key.Update();
+            Pad.Update();
             Touch.Update();
         }
     }
