@@ -111,7 +111,7 @@ namespace Inputs
 
             public int PacketNumber(PlayerIndex p = PlayerIndex.One) => State(p).PacketNumber;
 
-            public bool WasConnected(PlayerIndex p = PlayerIndex.One)
+            public bool JustConnected(PlayerIndex p = PlayerIndex.One)
                 => !OldState(p).IsConnected && State(p).IsConnected;
         }
 

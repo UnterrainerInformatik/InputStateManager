@@ -60,7 +60,15 @@ protected override void Update(GameTime gameTime)
 // Somewhere in your code:
 
 if (input.Mouse.Is.Press(Mouse.Button.LEFT)) {...}
+  // ...which is equivalent to:
+  if(input.Mouse.Is.Down(Mouse.Button.LEFT) && 
+     input.Mouse.Was.Up(Mouse.Button.LEFT))) {...}
+// Or:
 if (input.Mouse.Is.Release(Mouse.Button.LEFT)) {...}
+  // ...which is equivalent to:
+  if(input.Mouse.Is.Up(Mouse.Button.LEFT) && 
+     input.Mouse.Was.Down(Mouse.Button.LEFT))) {...}
+
 var positionDelta = input.Mouse.Is.PositionDelta;
 var scrollWheelDelta = input.Mouse.Is.ScrollWheelDelta;
 // Or, if you want the values of the last update:

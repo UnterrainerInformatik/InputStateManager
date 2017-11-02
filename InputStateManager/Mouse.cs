@@ -131,9 +131,6 @@ namespace Inputs
             public Point PositionDelta => OldState().Position - State().Position;
             public int ScrollWheelDelta => State().ScrollWheelValue - OldState().ScrollWheelValue;
 
-            public int HorizontalScrollWheelDelta
-                => State().HorizontalScrollWheelValue - OldState().HorizontalScrollWheelValue;
-
             public int XDelta => State().X - OldState().X;
             public int YDelta => State().Y - OldState().Y;
         }
@@ -153,7 +150,6 @@ namespace Inputs
 
             public Point Position => State().Position;
             public int ScrollWheelValue => State().ScrollWheelValue;
-            public int HorizontalScrollWheelValue => State().HorizontalScrollWheelValue;
             public int X => State().X;
             public int Y => State().Y;
         }

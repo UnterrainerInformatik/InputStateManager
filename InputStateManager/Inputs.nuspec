@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>InputStateManager</title>
+    <authors>Unterrainer Informatik OG Team</authors>
+    <owners>Public Domain</owners>
+    <licenseUrl>http://unlicense.org</licenseUrl>
+	<iconUrl>https://github.com/UnterrainerInformatik/InputStateManager/raw/master/icon.png</iconUrl>
+    <projectUrl>https://github.com/UnterrainerInformatik/InputStateManager</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A helper class for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.</description>
+    <summary>
+      A helper class for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.
+		Currently it provides convenience-methods in a fluent manner for:
+		- Keyboard (Key) Sub-context for 'Is' and 'Was', helper functions for 'Any-ALT (...SHIFT, CTRL)' and NumLock and CapsLock.
+		- Mouse (Mouse) Sub-context for 'Is' and 'Was' and delta-functions for mouse-wheel, position, etc...
+		- GamePad (Pad) Sub-context for 'Is' and 'Was' and for 'DPad', 'Triggers' and 'ThumbSticks'.
+		- TouchPanel (Touch) Sub-context for 'Is' and 'Was'. Currently only exposes TouchCollections.
+    </summary>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <language>en-US</language>
+    <tags>monogame inputmanager inputstatemanager input inputstate keyboard mouse touchpanel gamepad pressed released</tags>
+  </metadata>
+</package>

@@ -118,7 +118,7 @@ namespace Test
                      $"Pressed: {input.Mouse.Is.Press(Mouse.Button.RIGHT)} " +
                      $"Released: {input.Mouse.Is.Release(Mouse.Button.RIGHT)}\n");
             b.Append($"GamePad: {input.Pad.Is.DPad.Down(Pad.DPadDirection.UP)}\n");
-            
+            input.Pad.Is.Triggers.Right();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.DrawString(font, b, new Vector2(10, 10), Color.White);
             spriteBatch.End();
