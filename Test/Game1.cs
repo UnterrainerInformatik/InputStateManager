@@ -104,9 +104,9 @@ namespace Test
         private void DrawText()
         {
             StringBuilder b = new StringBuilder();
-            b.Append($"Mouse Button Left Down: {input.Mouse.IsDown(Mouse.Button.LEFT)}\n");
-            b.Append($"Mouse Button Middle Down: {input.Mouse.IsDown(Mouse.Button.MIDDLE)}\n");
-            b.Append($"Mouse Button Right Down: {input.Mouse.IsDown(Mouse.Button.RIGHT)}\n");
+            b.Append($"Mouse Button Left Down: {input.Mouse.Is.Down(Mouse.Button.LEFT)}\n");
+            b.Append($"Mouse Button Middle Down: {input.Mouse.Is.Down(Mouse.Button.MIDDLE)}\n");
+            b.Append($"Mouse Button Right Down: {input.Mouse.Is.Down(Mouse.Button.RIGHT)}\n");
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.DrawString(font, b, new Vector2(10, 10), Color.White);
