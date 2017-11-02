@@ -25,6 +25,7 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
+using System;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Input;
 
@@ -36,32 +37,66 @@ namespace Inputs
         public KeyboardState OldState { get; set; }
         public KeyboardState State { get; set; }
 
-        public bool IsDown(Keys key) => State.IsKeyDown(key);
-        public bool IsUp(Keys key) => State.IsKeyUp(key);
-        public bool IsPress(Keys key) => State.IsKeyDown(key) && OldState.IsKeyUp(key);
-        public bool IsRelease(Keys key) => OldState.IsKeyDown(key) && State.IsKeyUp(key);
+        /// <summary>
+        ///     Gets information about the current state. Including calculated delta values.
+        /// </summary>
+        public IsSub Is { get; }
 
-        public bool IsShiftDown => IsDown(Keys.LeftShift) || IsDown(Keys.RightShift);
-        public bool IsCtrlDown => IsDown(Keys.LeftControl) || IsDown(Keys.RightControl);
-        public bool IsAltDown => IsDown(Keys.LeftAlt) || IsDown(Keys.RightAlt);
-        public bool IsNumLock => State.NumLock;
-        public bool IsCapsLock => State.CapsLock;
-        public Keys[] GetPressedKeys => State.GetPressedKeys();
+        /// <summary>
+        ///     Gets information about the previous state. No delta values included, since it has no 'old' state to refer to.
+        /// </summary>
+        public WasSub Was { get; }
 
-        public bool IsOldDown(Keys key) => OldState.IsKeyDown(key);
-        public bool IsOldUp(Keys key) => OldState.IsKeyUp(key);
+        internal Keyboard()
+        {
+            Is = new IsSub(GetState, GetOldState);
+            Was = new WasSub(GetOldState);
+        }
 
-        public bool IsOldShiftDown => IsOldDown(Keys.LeftShift) || IsOldDown(Keys.RightShift);
-        public bool IsOldCtrlDown => IsOldDown(Keys.LeftControl) || IsOldDown(Keys.RightControl);
-        public bool IsOldAltDown => IsOldDown(Keys.LeftAlt) || IsOldDown(Keys.RightAlt);
-        public bool IsOldNumLock => OldState.NumLock;
-        public bool IsOldCapsLock => OldState.CapsLock;
-        public Keys[] GetOldPressedKeys => OldState.GetPressedKeys();
+        internal KeyboardState GetState() => State;
+        internal KeyboardState GetOldState() => OldState;
 
         internal void Update()
         {
             OldState = State;
             State = Microsoft.Xna.Framework.Input.Keyboard.GetState();
+        }
+
+        [PublicAPI]
+        public class IsSub : WasSub
+        {
+            private Func<KeyboardState> State { get; set; }
+            private Func<KeyboardState> OldState { get; set; }
+
+            internal IsSub(Func<KeyboardState> mapping, Func<KeyboardState> oldMapping) : base(mapping)
+            {
+                State = mapping;
+                OldState = oldMapping;
+            }
+
+            public bool Press(Keys key) => State().IsKeyDown(key) && OldState().IsKeyUp(key);
+            public bool Release(Keys key) => OldState().IsKeyDown(key) && State().IsKeyUp(key);
+        }
+
+        [PublicAPI]
+        public class WasSub
+        {
+            private Func<KeyboardState> State { get; set; }
+
+            internal WasSub(Func<KeyboardState> mapping)
+            {
+                State = mapping;
+            }
+
+            public bool Down(Keys key) => State().IsKeyDown(key);
+            public bool Up(Keys key) => State().IsKeyUp(key);
+
+            public bool ShiftDown => Down(Keys.LeftShift) || Down(Keys.RightShift);
+            public bool CtrlDown => Down(Keys.LeftControl) || Down(Keys.RightControl);
+            public bool AltDown => Down(Keys.LeftAlt) || Down(Keys.RightAlt);
+            public bool NumLock => State().NumLock;
+            public bool CapsLock => State().CapsLock;
+            public Keys[] GetPressedKeys => State().GetPressedKeys();
         }
     }
 }

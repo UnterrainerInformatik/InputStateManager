@@ -30,6 +30,7 @@ using Inputs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using GamePad = Inputs.GamePad;
 using Mouse = Inputs.Mouse;
 
 namespace Test
@@ -84,7 +85,7 @@ namespace Test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (input.GamePad.IsPress(Buttons.Back) || input.Keyboard.IsPress(Keys.Escape))
+            if (input.GamePad.Is.Press(Buttons.Back) || input.Keyboard.Is.Press(Keys.Escape))
                 Exit();
             input.Update();
             base.Update(gameTime);
@@ -96,7 +97,11 @@ namespace Test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            if (input.Mouse.Is.Press(Mouse.Button.LEFT))
+                GraphicsDevice.Clear(Color.CornflowerBlue);
+            else if (input.Mouse.Is.Release(Mouse.Button.LEFT))
+                GraphicsDevice.Clear(Color.Coral);
+            else GraphicsDevice.Clear(Color.Black);
             DrawText();
             base.Draw(gameTime);
         }
@@ -104,9 +109,16 @@ namespace Test
         private void DrawText()
         {
             StringBuilder b = new StringBuilder();
-            b.Append($"Mouse Button Left Down: {input.Mouse.Is.Down(Mouse.Button.LEFT)}\n");
-            b.Append($"Mouse Button Middle Down: {input.Mouse.Is.Down(Mouse.Button.MIDDLE)}\n");
-            b.Append($"Mouse Button Right Down: {input.Mouse.Is.Down(Mouse.Button.RIGHT)}\n");
+            b.Append($"Mouse Button Left Down: {input.Mouse.Is.Down(Mouse.Button.LEFT)} " +
+                     $"Pressed: {input.Mouse.Is.Press(Mouse.Button.LEFT)} " +
+                     $"Released: {input.Mouse.Is.Release(Mouse.Button.LEFT)}\n");
+            b.Append($"Mouse Button Middle Down: {input.Mouse.Is.Down(Mouse.Button.MIDDLE)} " +
+                     $"Pressed: {input.Mouse.Is.Press(Mouse.Button.MIDDLE)} " +
+                     $"Released: {input.Mouse.Is.Release(Mouse.Button.MIDDLE)}\n");
+            b.Append($"Mouse Button Right Down: {input.Mouse.Is.Down(Mouse.Button.RIGHT)} " +
+                     $"Pressed: {input.Mouse.Is.Press(Mouse.Button.RIGHT)} " +
+                     $"Released: {input.Mouse.Is.Release(Mouse.Button.RIGHT)}\n");
+            b.Append($"GamePad: {input.GamePad.Is.DPad.Down(GamePad.DPadDirection.UP)}\n");
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.DrawString(font, b, new Vector2(10, 10), Color.White);

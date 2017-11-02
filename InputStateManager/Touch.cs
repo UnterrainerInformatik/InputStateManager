@@ -35,8 +35,21 @@ namespace Inputs
     [PublicAPI]
     public class Touch
     {
-        public TouchCollection TouchCollection { get; private set; }
-        public TouchCollection OldTouchCollection { get; private set; }
+        /// <summary>
+        ///     Gets information about the current state. Including calculated delta values.
+        /// </summary>
+        public IsSub Is { get; }
+
+        /// <summary>
+        ///     Gets information about the previous state. No delta values included, since it has no 'old' state to refer to.
+        /// </summary>
+        public WasSub Was { get; }
+
+        internal Touch()
+        {
+            Is = new IsSub();
+            Was = new WasSub();
+        }
 
         public int DisplayHeight => TouchPanel.DisplayHeight;
         public int DisplayWidth => TouchPanel.DisplayWidth;
@@ -46,7 +59,6 @@ namespace Inputs
         public bool EnableMouseTouchPoint => TouchPanel.EnableMouseTouchPoint;
         public GestureType EnabledGestures => TouchPanel.EnabledGestures;
         public IntPtr WindowHandle => TouchPanel.WindowHandle;
-
         public TouchPanelCapabilities GetCapabilities => TouchPanel.GetCapabilities();
 
         public GestureSample ReadGesture() => TouchPanel.ReadGesture();
@@ -72,8 +84,20 @@ namespace Inputs
 
         internal void Update()
         {
-            OldTouchCollection = TouchCollection;
-            TouchCollection = TouchPanel.GetState();
+            Was.Collection = Is.Collection;
+            Is.Collection = TouchPanel.GetState();
+        }
+
+        [PublicAPI]
+        public class IsSub
+        {
+            public TouchCollection Collection { get; internal set; }
+        }
+
+        [PublicAPI]
+        public class WasSub
+        {
+            public TouchCollection Collection { get; internal set; }
         }
     }
 }
