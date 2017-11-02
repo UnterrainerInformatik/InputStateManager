@@ -37,9 +37,9 @@
       <HintPath>packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\MonoGame.Framework.DesktopGL.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1598, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,16 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="x64\libopenal.so.1" />
-    <None Include="x64\libSDL2-2.0.so.0" />
-    <None Include="x86\libopenal.so.1" />
-    <None Include="x86\libSDL2-2.0.so.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="x64\SDL2.dll" />
-    <Content Include="x64\soft_oal.dll" />
-    <Content Include="x86\SDL2.dll" />
-    <Content Include="x86\soft_oal.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

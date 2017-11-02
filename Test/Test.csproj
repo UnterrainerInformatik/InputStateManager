@@ -52,9 +52,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\InputStateManager\packages\MonoGame.Framework.DesktopGL.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1598, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\WindowsGL\OpenTK.dll</HintPath>
@@ -64,10 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <Content Include="x64\SDL2.dll" />
-    <Content Include="x64\soft_oal.dll" />
-    <Content Include="x86\SDL2.dll" />
-    <Content Include="x86\soft_oal.dll" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
@@ -75,12 +71,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Content\AnonymousPro8.spritefont" />
-    <None Include="MonoGame.Framework.dll.config" />
-    <None Include="packages.config" />
-    <None Include="x64\libopenal.so.1" />
-    <None Include="x64\libSDL2-2.0.so.0" />
-    <None Include="x86\libopenal.so.1" />
-    <None Include="x86\libSDL2-2.0.so.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InputStateManager\Inputs.csproj">
