@@ -1,0 +1,22 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/WindowsGL
+/intermediateDir:obj/WindowsGL
+/platform:DesktopGL
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+
+#---------------------------------- Content ---------------------------------#
+
+#begin AnonymousPro8.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:AnonymousPro8.spritefont
+
