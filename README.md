@@ -40,7 +40,11 @@ Currently it provides convenience-methods in a fluent manner for:
 ### Setup
 
 ```c#
-private readonly InputStateManager input = new InputStateManager();
+// Due to a naming-clash you'll need the following line in your imports:
+using Mouse = InputStateManager.Inputs.Mouse;
+
+// Now lets create a manager for our inputs:
+private readonly InputManager input = new InputManager();
 ...
 
 /// <summary>
@@ -52,6 +56,7 @@ protected override void Update(GameTime gameTime)
 {
   if (input.Pad.Is.Press(Buttons.Back) || input.Key.Is.Press(Keys.Escape))
     Exit();
+  // Update the manager so that it can record changes:
   input.Update();
   base.Update(gameTime);
 }
