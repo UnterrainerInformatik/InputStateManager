@@ -114,9 +114,9 @@
     <None Include="Content\AnonymousPro8.spritefont" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InputStateManager\Inputs.csproj">
+    <ProjectReference Include="..\InputStateManager\InputStateManager.csproj">
       <Project>{48D4510A-1D34-4F2F-B8D1-72617109B28F}</Project>
-      <Name>Inputs</Name>
+      <Name>InputStateManager</Name>
     </ProjectReference>
   </ItemGroup>
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->

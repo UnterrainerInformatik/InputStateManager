@@ -29,7 +29,7 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Inputs.Inputs.GamePad
+namespace InputStateManager.Inputs.GamePad
 {
     [PublicAPI]
     class GamePadStates

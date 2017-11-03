@@ -30,7 +30,7 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Inputs.Inputs.Mouse
+namespace InputStateManager.Inputs
 {
     [PublicAPI]
     public class Mouse

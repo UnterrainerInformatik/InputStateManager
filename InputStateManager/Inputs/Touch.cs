@@ -30,7 +30,7 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
 
-namespace Inputs.Inputs.TouchPanel
+namespace InputStateManager.Inputs
 {
     [PublicAPI]
     public class Touch

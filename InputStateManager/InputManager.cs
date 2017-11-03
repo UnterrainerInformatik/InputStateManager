@@ -25,16 +25,13 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
-using Inputs.Inputs.GamePad;
-using Inputs.Inputs.Keyboard;
-using Inputs.Inputs.Mouse;
-using Inputs.Inputs.TouchPanel;
+using InputStateManager.Inputs;
 using JetBrains.Annotations;
 
-namespace Inputs
+namespace InputStateManager
 {
     [PublicAPI]
-    public class InputStateManager
+    public class InputManager
     {
         public Mouse Mouse { get; } = new Mouse();
         public Pad Pad { get; } = new Pad();

@@ -29,7 +29,7 @@ using System;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Input;
 
-namespace Inputs.Inputs.Keyboard
+namespace InputStateManager.Inputs
 {
     [PublicAPI]
     public class Key

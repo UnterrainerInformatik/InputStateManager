@@ -26,12 +26,12 @@
 // ***************************************************************************
 
 using System.Text;
-using Inputs;
-using Inputs.Inputs.GamePad;
+using InputStateManager;
+using InputStateManager.Inputs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Mouse = Inputs.Inputs.Mouse.Mouse;
+using Mouse = InputStateManager.Inputs.Mouse;
 
 namespace Test
 {
@@ -45,7 +45,7 @@ namespace Test
 
         SpriteBatch spriteBatch;
         private SpriteFont font;
-        private readonly InputStateManager input = new InputStateManager();
+        private readonly InputManager input = new InputManager();
 
         public Game1()
         {
