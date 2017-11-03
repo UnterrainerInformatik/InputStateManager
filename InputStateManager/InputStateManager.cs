@@ -25,6 +25,10 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
+using Inputs.Inputs.GamePad;
+using Inputs.Inputs.Keyboard;
+using Inputs.Inputs.Mouse;
+using Inputs.Inputs.TouchPanel;
 using JetBrains.Annotations;
 
 namespace Inputs

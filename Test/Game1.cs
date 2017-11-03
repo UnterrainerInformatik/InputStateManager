@@ -27,10 +27,11 @@
 
 using System.Text;
 using Inputs;
+using Inputs.Inputs.GamePad;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Mouse = Inputs.Mouse;
+using Mouse = Inputs.Inputs.Mouse.Mouse;
 
 namespace Test
 {

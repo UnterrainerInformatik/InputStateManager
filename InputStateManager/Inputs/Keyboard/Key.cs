@@ -29,7 +29,7 @@ using System;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Input;
 
-namespace Inputs
+namespace Inputs.Inputs.Keyboard
 {
     [PublicAPI]
     public class Key
@@ -59,7 +59,7 @@ namespace Inputs
         internal void Update()
         {
             OldState = State;
-            State = Keyboard.GetState();
+            State = Microsoft.Xna.Framework.Input.Keyboard.GetState();
         }
 
         [PublicAPI]

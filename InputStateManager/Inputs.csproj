@@ -37,75 +37,25 @@
       <HintPath>packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MonoGame.Framework, Version=3.6.0.1598, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MonoGame.Framework.Portable.3.6.0.1625\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pad.cs" />
-    <Compile Include="Helpers\GamePadStates.cs" />
+    <Compile Include="Inputs\GamePad\GamePadStates.cs" />
+    <Compile Include="Inputs\GamePad\Pad.cs" />
     <Compile Include="InputStateManager.cs" />
-    <Compile Include="Key.cs" />
-    <Compile Include="Mouse.cs" />
+    <Compile Include="Inputs\Keyboard\Key.cs" />
+    <Compile Include="Inputs\Mouse\Mouse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Touch.cs" />
+    <Compile Include="Inputs\TouchPanel\Touch.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Program Files %28x86%29\MonoGame\v3.0\Assemblies\DesktopGL\libopenal.1.dylib">
-      <Link>libopenal.1.dylib</Link>
-    </None>
-    <None Include="..\..\..\Program Files %28x86%29\MonoGame\v3.0\Assemblies\DesktopGL\libSDL2-2.0.0.dylib">
-      <Link>libSDL2-2.0.0.dylib</Link>
-    </None>
-    <None Include="..\..\..\Program Files %28x86%29\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll.config">
-      <Link>MonoGame.Framework.dll.config</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\program files %28x86%29\monogame\v3.0\assemblies\desktopgl\x64\libopenal.so.1">
-      <Link>x64\libopenal.so.1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\program files %28x86%29\monogame\v3.0\assemblies\desktopgl\x64\libSDL2-2.0.so.0">
-      <Link>x64\libSDL2-2.0.so.0</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\program files %28x86%29\monogame\v3.0\assemblies\desktopgl\x86\libopenal.so.1">
-      <Link>x86\libopenal.so.1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\program files %28x86%29\monogame\v3.0\assemblies\desktopgl\x86\libSDL2-2.0.so.0">
-      <Link>x86\libSDL2-2.0.so.0</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\program files %28x86%29\monogame\v3.0\assemblies\desktopgl\x64\SDL2.dll">
-      <Link>x64\SDL2.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\program files %28x86%29\monogame\v3.0\assemblies\desktopgl\x64\soft_oal.dll">
-      <Link>x64\soft_oal.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\program files %28x86%29\monogame\v3.0\assemblies\desktopgl\x86\SDL2.dll">
-      <Link>x86\SDL2.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\program files %28x86%29\monogame\v3.0\assemblies\desktopgl\x86\soft_oal.dll">
-      <Link>x86\soft_oal.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
