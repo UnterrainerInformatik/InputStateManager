@@ -13,7 +13,10 @@ If you want to contribute to our repository (push, open pull requests), please u
 
 We accept pull requests!
 
-**If you like this repo, don't forget to star it!**
+> **If you like this repo, please don't forget to star it.**
+> **Thank you.**
+
+
 
 # ![Icon](https://github.com/UnterrainerInformatik/InputStateManager/raw/master/icon.png)InputStateManager
 
