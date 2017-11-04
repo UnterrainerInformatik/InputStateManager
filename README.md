@@ -17,7 +17,7 @@ We accept pull requests!
 
 # ![Icon](https://github.com/UnterrainerInformatik/InputStateManager/raw/master/icon.png)InputStateManager
 
-This is a helper class for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.
+This is a PCL library for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.
 
 Currently it provides convenience-methods in a fluent manner for:
 

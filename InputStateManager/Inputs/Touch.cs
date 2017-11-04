@@ -51,17 +51,17 @@ namespace InputStateManager.Inputs
             Was = new WasSub();
         }
 
-        public int DisplayHeight => Microsoft.Xna.Framework.Input.Touch.TouchPanel.DisplayHeight;
-        public int DisplayWidth => Microsoft.Xna.Framework.Input.Touch.TouchPanel.DisplayWidth;
-        public DisplayOrientation DisplayOrientation => Microsoft.Xna.Framework.Input.Touch.TouchPanel.DisplayOrientation;
-        public bool IsGestureAvailable => Microsoft.Xna.Framework.Input.Touch.TouchPanel.IsGestureAvailable;
-        public bool EnableMouseGestures => Microsoft.Xna.Framework.Input.Touch.TouchPanel.EnableMouseGestures;
-        public bool EnableMouseTouchPoint => Microsoft.Xna.Framework.Input.Touch.TouchPanel.EnableMouseTouchPoint;
-        public GestureType EnabledGestures => Microsoft.Xna.Framework.Input.Touch.TouchPanel.EnabledGestures;
-        public IntPtr WindowHandle => Microsoft.Xna.Framework.Input.Touch.TouchPanel.WindowHandle;
-        public TouchPanelCapabilities GetCapabilities => Microsoft.Xna.Framework.Input.Touch.TouchPanel.GetCapabilities();
+        public int DisplayHeight => TouchPanel.DisplayHeight;
+        public int DisplayWidth => TouchPanel.DisplayWidth;
+        public DisplayOrientation DisplayOrientation => TouchPanel.DisplayOrientation;
+        public bool IsGestureAvailable => TouchPanel.IsGestureAvailable;
+        public bool EnableMouseGestures => TouchPanel.EnableMouseGestures;
+        public bool EnableMouseTouchPoint => TouchPanel.EnableMouseTouchPoint;
+        public GestureType EnabledGestures => TouchPanel.EnabledGestures;
+        public IntPtr WindowHandle => TouchPanel.WindowHandle;
+        public TouchPanelCapabilities GetCapabilities => TouchPanel.GetCapabilities();
 
-        public GestureSample ReadGesture() => Microsoft.Xna.Framework.Input.Touch.TouchPanel.ReadGesture();
+        public GestureSample ReadGesture() => TouchPanel.ReadGesture();
 
         private bool emulateWithMouse;
 
@@ -72,11 +72,11 @@ namespace InputStateManager.Inputs
             {
                 if (!emulateWithMouse)
                 {
-                    Microsoft.Xna.Framework.Input.Touch.TouchPanel.EnabledGestures = GestureType.Hold | GestureType.Tap | GestureType.DoubleTap |
+                    TouchPanel.EnabledGestures = GestureType.Hold | GestureType.Tap | GestureType.DoubleTap |
                                                  GestureType.DragComplete | GestureType.Flick | GestureType.FreeDrag |
                                                  GestureType.HorizontalDrag | GestureType.VerticalDrag;
-                    Microsoft.Xna.Framework.Input.Touch.TouchPanel.EnableMouseGestures = true;
-                    Microsoft.Xna.Framework.Input.Touch.TouchPanel.EnableMouseTouchPoint = true;
+                    TouchPanel.EnableMouseGestures = true;
+                    TouchPanel.EnableMouseTouchPoint = true;
                 }
                 emulateWithMouse = value;
             }
@@ -85,7 +85,7 @@ namespace InputStateManager.Inputs
         internal void Update()
         {
             Was.Collection = Is.Collection;
-            Is.Collection = Microsoft.Xna.Framework.Input.Touch.TouchPanel.GetState();
+            Is.Collection = TouchPanel.GetState();
         }
 
         [PublicAPI]

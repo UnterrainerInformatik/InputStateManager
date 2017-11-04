@@ -59,7 +59,7 @@ namespace InputStateManager.Inputs
         internal void Update()
         {
             OldState = State;
-            State = Microsoft.Xna.Framework.Input.Keyboard.GetState();
+            State = Keyboard.GetState();
         }
 
         [PublicAPI]
