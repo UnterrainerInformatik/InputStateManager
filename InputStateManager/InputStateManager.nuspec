@@ -10,14 +10,17 @@
 	<iconUrl>https://github.com/UnterrainerInformatik/InputStateManager/raw/master/icon.png</iconUrl>
     <projectUrl>https://github.com/UnterrainerInformatik/InputStateManager</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A helper class (InputStateManager) for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.</description>
-    <summary>
-      A helper class (InputStateManager) for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.
+    <description>
+		A helper PCL (InputStateManager) for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.
 		Currently it provides convenience-methods in a fluent manner for:
 		- Keyboard (Key) Sub-context for 'Is' and 'Was', helper functions for 'Any-ALT (...SHIFT, CTRL)' and NumLock and CapsLock.
 		- Mouse (Mouse) Sub-context for 'Is' and 'Was' and delta-functions for mouse-wheel, position, etc...
 		- GamePad (Pad) Sub-context for 'Is' and 'Was' and for 'DPad', 'Triggers' and 'ThumbSticks'.
 		- TouchPanel (Touch) Sub-context for 'Is' and 'Was'. Currently only exposes TouchCollections.
+		It is a PCL so you should be able to use it in any MG project.
+	</description>
+    <summary>
+      A helper PCL (InputStateManager) for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.
     </summary>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2017</copyright>
