@@ -108,7 +108,7 @@ namespace Test
 
         private void DrawText()
         {
-            StringBuilder b = new StringBuilder();
+            var b = new StringBuilder();
             b.Append($"Mouse Button Left Down: {input.Mouse.Is.Down(Mouse.Button.LEFT)} " +
                      $"Pressed: {input.Mouse.Is.Press(Mouse.Button.LEFT)} " +
                      $"Released: {input.Mouse.Is.Release(Mouse.Button.LEFT)}\n");

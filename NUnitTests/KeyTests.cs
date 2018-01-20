@@ -25,22 +25,44 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
+using InputStateManager;
+using InputStateManager.Inputs.InputProviders.Interfaces;
+using Microsoft.Xna.Framework.Input;
+using Moq;
 using NUnit.Framework;
 
 namespace NUnitTests
 {
     [TestFixture]
     [Category("InputStateManager")]
-    public class Tests
+    public class KeyTests
     {
+        private InputManager input;
+        private Mock<IKeyInputProvider> providerMock;
+
         [SetUp]
         public void Setup()
         {
+            providerMock = new Mock<IKeyInputProvider>();
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A, Keys.LeftShift, Keys.LeftControl, Keys.LeftAlt))
+                .Returns(new KeyboardState(Keys.B)).Returns(new KeyboardState(Keys.C))
+                .Returns(new KeyboardState(Keys.D));
+
+            input = new InputManager(providerMock.Object, null, null, null);
         }
 
         [Test]
         public void TestMocking()
         {
+            input.Update(); 
+            Assert.IsTrue(input.Key.Is.Down(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Down(Keys.B));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Down(Keys.C));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Down(Keys.D));
         }
     }
 }

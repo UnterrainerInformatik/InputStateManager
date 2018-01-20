@@ -56,10 +56,13 @@ namespace InputStateManager.Inputs.GamePad
 
         public void Update()
         {
-            for (int i = 0; i < States.Length; i++)
-                OldStates[i] = States[i];
+            if (provider == null)
+                return;
 
-            for (int i = 0; i < States.Length; i++)
+            for (var i = 0; i < States.Length; i++)
+                OldStates[i] = States[i];
+            
+            for (var i = 0; i < States.Length; i++)
                 States[i] = provider.GetState(i);
         }
     }

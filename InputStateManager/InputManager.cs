@@ -39,7 +39,7 @@ namespace InputStateManager
         public Mouse Mouse { get; }
         public Pad Pad { get; }
         public Touch Touch { get; }
-        
+
         public InputManager()
         {
             Key = new Key(new XnaKeyInputProvider());
@@ -49,9 +49,10 @@ namespace InputStateManager
         }
 
         /// <summary>
-        /// Constructor that lets you inject input-providers for testing purposes.
+        ///     Constructor that lets you inject input-providers for testing purposes.
         /// </summary>
-        public InputManager(IKeyInputProvider keyInputProvider, IMouseInputProvider mouseInputProvider, IPadInputProvider padInputProvider, ITouchInputProvider touchInputProvider)
+        public InputManager(IKeyInputProvider keyInputProvider, IMouseInputProvider mouseInputProvider,
+            IPadInputProvider padInputProvider, ITouchInputProvider touchInputProvider)
         {
             Key = new Key(keyInputProvider);
             Mouse = new Mouse(mouseInputProvider);

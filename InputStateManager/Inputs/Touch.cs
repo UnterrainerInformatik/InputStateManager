@@ -88,6 +88,9 @@ namespace InputStateManager.Inputs
 
         internal void Update()
         {
+            if (provider == null)
+                return;
+
             Was.Collection = Is.Collection;
             Is.Collection = provider.GetState();
         }

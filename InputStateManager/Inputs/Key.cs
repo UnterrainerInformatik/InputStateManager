@@ -62,6 +62,9 @@ namespace InputStateManager.Inputs
 
         internal void Update()
         {
+            if (provider == null)
+                return;
+
             OldState = State;
             State = provider.GetState();
         }
