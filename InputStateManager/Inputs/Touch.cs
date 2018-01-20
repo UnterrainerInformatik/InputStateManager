@@ -26,6 +26,7 @@
 // ***************************************************************************
 
 using System;
+using InputStateManager.Inputs.InputProviders.Interfaces;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
@@ -35,6 +36,8 @@ namespace InputStateManager.Inputs
     [PublicAPI]
     public class Touch
     {
+        private ITouchInputProvider provider;
+
         /// <summary>
         ///     Gets information about the current state. Including calculated delta values.
         /// </summary>
@@ -45,29 +48,30 @@ namespace InputStateManager.Inputs
         /// </summary>
         public WasSub Was { get; }
 
-        internal Touch()
+        internal Touch(ITouchInputProvider provider)
         {
+            this.provider = provider;
             Is = new IsSub();
             Was = new WasSub();
         }
 
-        public int DisplayHeight => TouchPanel.DisplayHeight;
-        public int DisplayWidth => TouchPanel.DisplayWidth;
-        public DisplayOrientation DisplayOrientation => TouchPanel.DisplayOrientation;
-        public bool IsGestureAvailable => TouchPanel.IsGestureAvailable;
-        public bool EnableMouseGestures => TouchPanel.EnableMouseGestures;
-        public bool EnableMouseTouchPoint => TouchPanel.EnableMouseTouchPoint;
-        public GestureType EnabledGestures => TouchPanel.EnabledGestures;
-        public IntPtr WindowHandle => TouchPanel.WindowHandle;
-        public TouchPanelCapabilities GetCapabilities => TouchPanel.GetCapabilities();
+        public int DisplayHeight => provider.GetDisplayHeight();
+        public int DisplayWidth => provider.GetDisplayWidth();
+        public DisplayOrientation DisplayOrientation => provider.GetDisplayOrientation();
+        public bool IsGestureAvailable => provider.GetIsGestureAvailable();
+        public bool EnableMouseGestures => provider.GetEnableMouseGestures();
+        public bool EnableMouseTouchPoint => provider.GetEnableMouseTouchPoint();
+        public GestureType EnabledGestures => provider.GetEnabledGestures();
+        public IntPtr WindowHandle => provider.GetWindowHandle();
+        public TouchPanelCapabilities GetCapabilities => provider.GetCapabilities();
 
-        public GestureSample ReadGesture() => TouchPanel.ReadGesture();
+        public GestureSample ReadGesture() => provider.ReadGesture();
 
         private bool emulateWithMouse;
 
         public bool EmulateWithMouse
         {
-            get { return emulateWithMouse; }
+            get => emulateWithMouse;
             set
             {
                 if (!emulateWithMouse)
@@ -85,7 +89,7 @@ namespace InputStateManager.Inputs
         internal void Update()
         {
             Was.Collection = Is.Collection;
-            Is.Collection = TouchPanel.GetState();
+            Is.Collection = provider.GetState();
         }
 
         [PublicAPI]

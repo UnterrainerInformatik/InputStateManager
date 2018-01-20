@@ -26,41 +26,15 @@
 // ***************************************************************************
 
 using InputStateManager.Inputs.InputProviders.Interfaces;
-using JetBrains.Annotations;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace InputStateManager.Inputs.GamePad
+namespace InputStateManager.Inputs.InputProviders.Implementations
 {
-    [PublicAPI]
-    internal class GamePadStates
+    internal class XnaPadInputProvider : IPadInputProvider
     {
-        private IPadInputProvider provider;
-        private GamePadState[] OldStates { get; set; } = new GamePadState[4];
-        private GamePadState[] States { get; set; } = new GamePadState[4];
-
-        public GamePadStates(IPadInputProvider provider)
+        public GamePadState GetState(int index)
         {
-            this.provider = provider;
-        }
-
-        public GamePadState Get(PlayerIndex playerIndex = PlayerIndex.One)
-        {
-            return States[(int) playerIndex];
-        }
-
-        public GamePadState GetOld(PlayerIndex playerIndex = PlayerIndex.One)
-        {
-            return OldStates[(int) playerIndex];
-        }
-
-        public void Update()
-        {
-            for (int i = 0; i < States.Length; i++)
-                OldStates[i] = States[i];
-
-            for (int i = 0; i < States.Length; i++)
-                States[i] = provider.GetState(i);
+            return Microsoft.Xna.Framework.Input.GamePad.GetState(index);
         }
     }
 }

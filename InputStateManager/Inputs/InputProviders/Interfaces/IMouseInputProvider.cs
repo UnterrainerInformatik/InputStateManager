@@ -25,42 +25,14 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
-using InputStateManager.Inputs.InputProviders.Interfaces;
 using JetBrains.Annotations;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace InputStateManager.Inputs.GamePad
+namespace InputStateManager.Inputs.InputProviders.Interfaces
 {
     [PublicAPI]
-    internal class GamePadStates
+    public interface IMouseInputProvider
     {
-        private IPadInputProvider provider;
-        private GamePadState[] OldStates { get; set; } = new GamePadState[4];
-        private GamePadState[] States { get; set; } = new GamePadState[4];
-
-        public GamePadStates(IPadInputProvider provider)
-        {
-            this.provider = provider;
-        }
-
-        public GamePadState Get(PlayerIndex playerIndex = PlayerIndex.One)
-        {
-            return States[(int) playerIndex];
-        }
-
-        public GamePadState GetOld(PlayerIndex playerIndex = PlayerIndex.One)
-        {
-            return OldStates[(int) playerIndex];
-        }
-
-        public void Update()
-        {
-            for (int i = 0; i < States.Length; i++)
-                OldStates[i] = States[i];
-
-            for (int i = 0; i < States.Length; i++)
-                States[i] = provider.GetState(i);
-        }
+        MouseState GetState();
     }
 }

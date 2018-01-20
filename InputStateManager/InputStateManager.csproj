@@ -10,12 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>InputStateManager</RootNamespace>
     <AssemblyName>InputStateManager</AssemblyName>
-
-	<DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
-    
-
-	<ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -48,6 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Inputs\GamePad\GamePadStates.cs" />
+    <Compile Include="Inputs\InputProviders\Implementations\XnaPadInputProvider.cs" />
+    <Compile Include="Inputs\InputProviders\Implementations\XnaTouchInputProvider.cs" />
+    <Compile Include="Inputs\InputProviders\Implementations\XnaMouseInputProvider.cs" />
+    <Compile Include="Inputs\InputProviders\Implementations\XnaKeyInputProvider.cs" />
+    <Compile Include="Inputs\InputProviders\Interfaces\ITouchInputProvider.cs" />
+    <Compile Include="Inputs\InputProviders\Interfaces\IPadInputProvider.cs" />
+    <Compile Include="Inputs\InputProviders\Interfaces\IKeyInputProvider.cs" />
+    <Compile Include="Inputs\InputProviders\Interfaces\IMouseInputProvider.cs" />
     <Compile Include="Inputs\Pad.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Inputs\Key.cs" />
@@ -58,6 +63,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

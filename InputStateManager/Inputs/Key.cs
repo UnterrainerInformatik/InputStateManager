@@ -26,6 +26,7 @@
 // ***************************************************************************
 
 using System;
+using InputStateManager.Inputs.InputProviders.Interfaces;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Input;
 
@@ -34,6 +35,8 @@ namespace InputStateManager.Inputs
     [PublicAPI]
     public class Key
     {
+        private IKeyInputProvider provider;
+
         public KeyboardState OldState { get; set; }
         public KeyboardState State { get; set; }
 
@@ -47,8 +50,9 @@ namespace InputStateManager.Inputs
         /// </summary>
         public WasSub Was { get; }
 
-        internal Key()
+        internal Key(IKeyInputProvider provider)
         {
+            this.provider = provider;
             Is = new IsSub(GetState, GetOldState);
             Was = new WasSub(GetOldState);
         }
@@ -59,7 +63,7 @@ namespace InputStateManager.Inputs
         internal void Update()
         {
             OldState = State;
-            State = Keyboard.GetState();
+            State = provider.GetState();
         }
 
         [PublicAPI]

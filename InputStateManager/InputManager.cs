@@ -26,6 +26,8 @@
 // ***************************************************************************
 
 using InputStateManager.Inputs;
+using InputStateManager.Inputs.InputProviders.Implementations;
+using InputStateManager.Inputs.InputProviders.Interfaces;
 using JetBrains.Annotations;
 
 namespace InputStateManager
@@ -33,10 +35,29 @@ namespace InputStateManager
     [PublicAPI]
     public class InputManager
     {
-        public Mouse Mouse { get; } = new Mouse();
-        public Pad Pad { get; } = new Pad();
-        public Key Key { get; } = new Key();
-        public Touch Touch { get; } = new Touch();
+        public Key Key { get; }
+        public Mouse Mouse { get; }
+        public Pad Pad { get; }
+        public Touch Touch { get; }
+        
+        public InputManager()
+        {
+            Key = new Key(new XnaKeyInputProvider());
+            Mouse = new Mouse(new XnaMouseInputProvider());
+            Pad = new Pad(new XnaPadInputProvider());
+            Touch = new Touch(new XnaTouchInputProvider());
+        }
+
+        /// <summary>
+        /// Constructor that lets you inject input-providers for testing purposes.
+        /// </summary>
+        public InputManager(IKeyInputProvider keyInputProvider, IMouseInputProvider mouseInputProvider, IPadInputProvider padInputProvider, ITouchInputProvider touchInputProvider)
+        {
+            Key = new Key(keyInputProvider);
+            Mouse = new Mouse(mouseInputProvider);
+            Pad = new Pad(padInputProvider);
+            Touch = new Touch(touchInputProvider);
+        }
 
         public void Update()
         {

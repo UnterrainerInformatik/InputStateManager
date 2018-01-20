@@ -26,6 +26,7 @@
 // ***************************************************************************
 
 using System;
+using InputStateManager.Inputs.InputProviders.Interfaces;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -44,6 +45,8 @@ namespace InputStateManager.Inputs
             X_BUTTON2
         }
 
+        private IMouseInputProvider provider;
+
         public MouseState OldState { get; set; }
         public MouseState State { get; set; }
 
@@ -57,8 +60,9 @@ namespace InputStateManager.Inputs
         /// </summary>
         public WasSub Was { get; }
 
-        internal Mouse()
+        internal Mouse(IMouseInputProvider provider)
         {
+            this.provider = provider;
             Is = new IsSub(GetState, GetOldState);
             Was = new WasSub(GetOldState);
         }
@@ -69,7 +73,7 @@ namespace InputStateManager.Inputs
         internal void Update()
         {
             OldState = State;
-            State = Microsoft.Xna.Framework.Input.Mouse.GetState();
+            State = provider.GetState();
         }
 
         internal static bool IsUp(MouseState state, Button button)

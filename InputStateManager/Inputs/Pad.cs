@@ -27,6 +27,7 @@
 
 using System;
 using InputStateManager.Inputs.GamePad;
+using InputStateManager.Inputs.InputProviders.Interfaces;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -44,7 +45,9 @@ namespace InputStateManager.Inputs
             UP
         }
 
-        private GamePadStates GamePadStates { get; set; } = new GamePadStates();
+        private IPadInputProvider provider;
+
+        private GamePadStates GamePadStates { get; set; }
         public GamePadState OldState(PlayerIndex p = PlayerIndex.One) => GamePadStates.GetOld(p);
         public GamePadState State(PlayerIndex p = PlayerIndex.One) => GamePadStates.Get(p);
 
@@ -58,8 +61,10 @@ namespace InputStateManager.Inputs
         /// </summary>
         public WasSub Was { get; }
 
-        internal Pad()
+        internal Pad(IPadInputProvider provider)
         {
+            this.provider = provider;
+            GamePadStates = new GamePadStates(provider);
             Is = new IsSub(GamePadStates.Get, GamePadStates.GetOld);
             Was = new WasSub(GamePadStates.GetOld);
         }
@@ -195,6 +200,7 @@ namespace InputStateManager.Inputs
                     case DPadDirection.UP:
                         return mapping(p).DPad.Up == ButtonState.Pressed;
                 }
+
                 return false;
             }
 
@@ -212,6 +218,7 @@ namespace InputStateManager.Inputs
                     case DPadDirection.UP:
                         return mapping(p).DPad.Up == ButtonState.Released;
                 }
+
                 return false;
             }
         }

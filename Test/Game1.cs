@@ -43,7 +43,7 @@ namespace Test
         public const int MIN_SCREEN_RESOLUTION_WIDTH = 1024;
         public const int MIN_SCREEN_RESOLUTION_HEIGHT = 768;
 
-        SpriteBatch spriteBatch;
+        private SpriteBatch spriteBatch;
         private SpriteFont font;
         private readonly InputManager input = new InputManager();
 
@@ -62,7 +62,7 @@ namespace Test
             Content.RootDirectory = "Content";
         }
 
-        void PrepareDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
+        private void PrepareDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
         {
             e.GraphicsDeviceInformation.GraphicsProfile = GraphicsProfile.HiDef;
         }

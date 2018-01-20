@@ -25,42 +25,68 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
+using System;
 using InputStateManager.Inputs.InputProviders.Interfaces;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
-namespace InputStateManager.Inputs.GamePad
+namespace InputStateManager.Inputs.InputProviders.Implementations
 {
-    [PublicAPI]
-    internal class GamePadStates
+    internal class XnaTouchInputProvider : ITouchInputProvider
     {
-        private IPadInputProvider provider;
-        private GamePadState[] OldStates { get; set; } = new GamePadState[4];
-        private GamePadState[] States { get; set; } = new GamePadState[4];
-
-        public GamePadStates(IPadInputProvider provider)
+        public TouchCollection GetState()
         {
-            this.provider = provider;
+            return TouchPanel.GetState();
         }
 
-        public GamePadState Get(PlayerIndex playerIndex = PlayerIndex.One)
+        public int GetDisplayHeight()
         {
-            return States[(int) playerIndex];
+            return TouchPanel.DisplayHeight;
         }
 
-        public GamePadState GetOld(PlayerIndex playerIndex = PlayerIndex.One)
+        public int GetDisplayWidth()
         {
-            return OldStates[(int) playerIndex];
+            return TouchPanel.DisplayWidth;
         }
 
-        public void Update()
+        public DisplayOrientation GetDisplayOrientation()
         {
-            for (int i = 0; i < States.Length; i++)
-                OldStates[i] = States[i];
+            return TouchPanel.DisplayOrientation;
+        }
 
-            for (int i = 0; i < States.Length; i++)
-                States[i] = provider.GetState(i);
+        public bool GetIsGestureAvailable()
+        {
+            return TouchPanel.IsGestureAvailable;
+        }
+
+        public bool GetEnableMouseGestures()
+        {
+            return TouchPanel.EnableMouseGestures;
+        }
+
+        public bool GetEnableMouseTouchPoint()
+        {
+            return TouchPanel.EnableMouseTouchPoint;
+        }
+
+        public GestureType GetEnabledGestures()
+        {
+            return TouchPanel.EnabledGestures;
+        }
+
+        public IntPtr GetWindowHandle()
+        {
+            return TouchPanel.WindowHandle;
+        }
+
+        public TouchPanelCapabilities GetCapabilities()
+        {
+            return TouchPanel.GetCapabilities();
+        }
+
+        public GestureSample ReadGesture()
+        {
+            return TouchPanel.ReadGesture();
         }
     }
 }
