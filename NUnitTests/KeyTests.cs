@@ -48,65 +48,265 @@ namespace NUnitTests
         }
 
         [Test]
-        public void KeyDownPressAndReleaseWorkAndAreInSquence()
+        public void KeyDownTriggers()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Down(Keys.A));
+        }
+
+        [Test]
+        public void KeyDownIsResetProperly()
         {
             providerMock.SetupSequence(o => o.GetState())
                 .Returns(new KeyboardState(Keys.A))
-                .Returns(new KeyboardState(Keys.B))
-                .Returns(new KeyboardState(Keys.C))
-                .Returns(new KeyboardState(Keys.C));
-            
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState());
             input.Update();
             Assert.IsTrue(input.Key.Is.Down(Keys.A));
-            Assert.IsFalse(input.Key.Is.Down(Keys.B));
-            Assert.IsFalse(input.Key.Is.Down(Keys.C));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Down(Keys.A));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Down(Keys.A));
+        }
 
+        [Test]
+        public void KeyUpTriggers()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Up(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Up(Keys.A));
+        }
+
+        [Test]
+        public void KeyUpIsResetProperly()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState())
+                .Returns(new KeyboardState(Keys.A));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Up(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Up(Keys.A));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Up(Keys.A));
+        }
+
+        [Test]
+        public void KeyPressTriggers()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A));
+            input.Update();
             Assert.IsTrue(input.Key.Is.Press(Keys.A));
-            Assert.IsFalse(input.Key.Is.Press(Keys.B));
-            Assert.IsFalse(input.Key.Is.Press(Keys.C));
+        }
 
-            Assert.IsFalse(input.Key.Is.Release(Keys.A));
-            Assert.IsFalse(input.Key.Is.Release(Keys.B));
-            Assert.IsFalse(input.Key.Is.Release(Keys.C));
-
+        [Test]
+        public void KeyPressIsResetWhenKeyIsReleased()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState());
             input.Update();
-            Assert.IsFalse(input.Key.Is.Down(Keys.A));
-            Assert.IsTrue(input.Key.Is.Down(Keys.B));
-            Assert.IsFalse(input.Key.Is.Down(Keys.C));
-
+            Assert.IsTrue(input.Key.Is.Press(Keys.A));
+            input.Update();
             Assert.IsFalse(input.Key.Is.Press(Keys.A));
-            Assert.IsTrue(input.Key.Is.Press(Keys.B));
-            Assert.IsFalse(input.Key.Is.Press(Keys.C));
+        }
 
+        [Test]
+        public void KeyPressIsResetWhenKeyIsStillDown()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Press(Keys.A));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Press(Keys.A));
+        }
+
+        [Test]
+        public void KeyReleaseTriggers()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Release(Keys.A));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Release(Keys.A));
+            input.Update();
             Assert.IsTrue(input.Key.Is.Release(Keys.A));
-            Assert.IsFalse(input.Key.Is.Release(Keys.B));
-            Assert.IsFalse(input.Key.Is.Release(Keys.C));
+        }
 
+        [Test]
+        public void KeyReleaseIsResetProperly()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState())
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Release(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Release(Keys.A));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Press(Keys.A));
+        }
+
+        [Test]
+        public void WasDownGivesOldState()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Down(Keys.A));
+            Assert.IsFalse(input.Key.Was.Down(Keys.A));
             input.Update();
             Assert.IsFalse(input.Key.Is.Down(Keys.A));
-            Assert.IsFalse(input.Key.Is.Down(Keys.B));
-            Assert.IsTrue(input.Key.Is.Down(Keys.C));
+            Assert.IsTrue(input.Key.Was.Down(Keys.A));
+        }
 
-            Assert.IsFalse(input.Key.Is.Press(Keys.A));
-            Assert.IsFalse(input.Key.Is.Press(Keys.B));
-            Assert.IsTrue(input.Key.Is.Press(Keys.C));
-
-            Assert.IsFalse(input.Key.Is.Release(Keys.A));
-            Assert.IsTrue(input.Key.Is.Release(Keys.B));
-            Assert.IsFalse(input.Key.Is.Release(Keys.C));
-
+        [Test]
+        public void WasUpGivesOldState()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState());
             input.Update();
-            Assert.IsFalse(input.Key.Is.Down(Keys.A));
-            Assert.IsFalse(input.Key.Is.Down(Keys.B));
-            Assert.IsTrue(input.Key.Is.Down(Keys.C));
+            Assert.IsFalse(input.Key.Is.Up(Keys.A));
+            Assert.IsTrue(input.Key.Was.Up(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Up(Keys.A));
+            Assert.IsFalse(input.Key.Was.Up(Keys.A));
+        }
 
-            Assert.IsFalse(input.Key.Is.Press(Keys.A));
-            Assert.IsFalse(input.Key.Is.Press(Keys.B));
-            Assert.IsFalse(input.Key.Is.Press(Keys.C));
+        [Test]
+        public void AltPressIsTriggeredAndReleasedWithLeftAndRightAlt()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.LeftAlt))
+                .Returns(new KeyboardState(Keys.RightAlt))
+                .Returns(new KeyboardState(Keys.LeftAlt, Keys.RightAlt))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.AltPress);
+            Assert.IsTrue(input.Key.Is.AltDown);
+            input.Update();
+            Assert.IsTrue(input.Key.Is.AltPress);
+            input.Update();
+            Assert.IsTrue(input.Key.Is.AltPress);
+            input.Update();
+            Assert.IsFalse(input.Key.Is.AltPress);
+            Assert.IsTrue(input.Key.Is.AltRelease);
+            Assert.IsTrue(input.Key.Is.AltUp);
+        }
 
-            Assert.IsFalse(input.Key.Is.Release(Keys.A));
-            Assert.IsFalse(input.Key.Is.Release(Keys.B));
-            Assert.IsFalse(input.Key.Is.Release(Keys.C));
+        [Test]
+        public void CtrlPressIsTriggeredAndReleasedWithLeftAndRightCtrl()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.LeftControl))
+                .Returns(new KeyboardState(Keys.RightControl))
+                .Returns(new KeyboardState(Keys.LeftControl, Keys.RightControl))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.CtrlPress);
+            Assert.IsTrue(input.Key.Is.CtrlDown);
+            input.Update();
+            Assert.IsTrue(input.Key.Is.CtrlPress);
+            input.Update();
+            Assert.IsTrue(input.Key.Is.CtrlPress);
+            input.Update();
+            Assert.IsFalse(input.Key.Is.CtrlPress);
+            Assert.IsTrue(input.Key.Is.CtrlRelease);
+            Assert.IsTrue(input.Key.Is.CtrlUp);
+        }
+
+        [Test]
+        public void ShiftPressIsTriggeredAndReleasedWithLeftAndRightShift()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.LeftShift))
+                .Returns(new KeyboardState(Keys.RightShift))
+                .Returns(new KeyboardState(Keys.LeftShift, Keys.RightShift))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.ShiftPress);
+            Assert.IsTrue(input.Key.Is.ShiftDown);
+            input.Update();
+            Assert.IsTrue(input.Key.Is.ShiftPress);
+            input.Update();
+            Assert.IsTrue(input.Key.Is.ShiftPress);
+            input.Update();
+            Assert.IsFalse(input.Key.Is.ShiftPress);
+            Assert.IsTrue(input.Key.Is.ShiftRelease);
+            Assert.IsTrue(input.Key.Is.ShiftUp);
+        }
+
+        [Test]
+        public void WindowsPressIsTriggeredAndReleasedWithLeftAndRightWindows()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.LeftWindows))
+                .Returns(new KeyboardState(Keys.RightWindows))
+                .Returns(new KeyboardState(Keys.LeftWindows, Keys.RightWindows))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.WindowsPress);
+            Assert.IsTrue(input.Key.Is.WindowsDown);
+            input.Update();
+            Assert.IsTrue(input.Key.Is.WindowsPress);
+            input.Update();
+            Assert.IsTrue(input.Key.Is.WindowsPress);
+            input.Update();
+            Assert.IsFalse(input.Key.Is.WindowsPress);
+            Assert.IsTrue(input.Key.Is.WindowsRelease);
+            Assert.IsTrue(input.Key.Is.WindowsUp);
+        }
+
+        [Test]
+        public void CapslockPressIsTriggeredAndReleased()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(new Keys[] { }, true))
+                .Returns(new KeyboardState(new Keys[] { }, true))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.CapsLockPress);
+            Assert.IsTrue(input.Key.Is.CapsLockDown);
+            input.Update();
+            Assert.IsFalse(input.Key.Is.CapsLockPress);
+            Assert.IsTrue(input.Key.Is.CapsLockDown);
+            input.Update();
+            Assert.IsFalse(input.Key.Is.CapsLockPress);
+            Assert.IsTrue(input.Key.Is.CapsLockUp);
+        }
+
+        [Test]
+        public void NumlockPressIsTriggeredAndReleased()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(new Keys[] { }, false, true))
+                .Returns(new KeyboardState(new Keys[] { }, false, true))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.NumLockPress);
+            Assert.IsTrue(input.Key.Is.NumLockDown);
+            input.Update();
+            Assert.IsFalse(input.Key.Is.NumLockPress);
+            Assert.IsTrue(input.Key.Is.NumLockDown);
+            input.Update();
+            Assert.IsFalse(input.Key.Is.NumLockPress);
+            Assert.IsTrue(input.Key.Is.NumLockUp);
         }
     }
 }

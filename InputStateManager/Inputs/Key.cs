@@ -87,10 +87,12 @@ namespace InputStateManager.Inputs
             public bool ShiftPress => Press(Keys.LeftShift) || Press(Keys.RightShift);
             public bool CtrlPress => Press(Keys.LeftControl) || Press(Keys.RightControl);
             public bool AltPress => Press(Keys.LeftAlt) || Press(Keys.RightAlt);
+            public bool WindowsPress => Press(Keys.LeftWindows) || Press(Keys.RightWindows);
 
             public bool ShiftRelease => Release(Keys.LeftShift) && Release(Keys.RightShift);
             public bool CtrlRelease => Release(Keys.LeftControl) && Release(Keys.RightControl);
             public bool AltRelease => Release(Keys.LeftAlt) && Release(Keys.RightAlt);
+            public bool WindowsRelease => Release(Keys.LeftWindows) && Release(Keys.RightWindows);
 
             public bool NumLockPress => State().NumLock && !OldState().NumLock;
             public bool NumLockRelease => !State().NumLock && OldState().NumLock;
@@ -115,11 +117,15 @@ namespace InputStateManager.Inputs
             public bool ShiftDown => Down(Keys.LeftShift) || Down(Keys.RightShift);
             public bool CtrlDown => Down(Keys.LeftControl) || Down(Keys.RightControl);
             public bool AltDown => Down(Keys.LeftAlt) || Down(Keys.RightAlt);
+            public bool WindowsDown => Down(Keys.LeftWindows) || Down(Keys.RightWindows);
             public bool ShiftUp => Up(Keys.LeftShift) && Up(Keys.RightShift);
             public bool CtrlUp => Up(Keys.LeftControl) && Up(Keys.RightControl);
             public bool AltUp => Up(Keys.LeftAlt) && Up(Keys.RightAlt);
-            public bool NumLock => State().NumLock;
-            public bool CapsLock => State().CapsLock;
+            public bool WindowsUp => Up(Keys.LeftWindows) && Up(Keys.RightWindows);
+            public bool NumLockUp => !State().NumLock;
+            public bool NumLockDown => State().NumLock;
+            public bool CapsLockUp => !State().CapsLock;
+            public bool CapsLockDown => State().CapsLock;
             public Keys[] GetPressedKeys => State().GetPressedKeys();
         }
     }
