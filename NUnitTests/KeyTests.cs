@@ -44,25 +44,69 @@ namespace NUnitTests
         public void Setup()
         {
             providerMock = new Mock<IKeyInputProvider>();
-            providerMock.SetupSequence(o => o.GetState())
-                .Returns(new KeyboardState(Keys.A, Keys.LeftShift, Keys.LeftControl, Keys.LeftAlt))
-                .Returns(new KeyboardState(Keys.B)).Returns(new KeyboardState(Keys.C))
-                .Returns(new KeyboardState(Keys.D));
-
             input = new InputManager(providerMock.Object, null, null, null);
         }
 
         [Test]
-        public void TestMocking()
+        public void KeyDownPressAndReleaseWorkAndAreInSquence()
         {
-            input.Update(); 
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState(Keys.B))
+                .Returns(new KeyboardState(Keys.C))
+                .Returns(new KeyboardState(Keys.C));
+            
+            input.Update();
             Assert.IsTrue(input.Key.Is.Down(Keys.A));
+            Assert.IsFalse(input.Key.Is.Down(Keys.B));
+            Assert.IsFalse(input.Key.Is.Down(Keys.C));
+
+            Assert.IsTrue(input.Key.Is.Press(Keys.A));
+            Assert.IsFalse(input.Key.Is.Press(Keys.B));
+            Assert.IsFalse(input.Key.Is.Press(Keys.C));
+
+            Assert.IsFalse(input.Key.Is.Release(Keys.A));
+            Assert.IsFalse(input.Key.Is.Release(Keys.B));
+            Assert.IsFalse(input.Key.Is.Release(Keys.C));
+
             input.Update();
+            Assert.IsFalse(input.Key.Is.Down(Keys.A));
             Assert.IsTrue(input.Key.Is.Down(Keys.B));
+            Assert.IsFalse(input.Key.Is.Down(Keys.C));
+
+            Assert.IsFalse(input.Key.Is.Press(Keys.A));
+            Assert.IsTrue(input.Key.Is.Press(Keys.B));
+            Assert.IsFalse(input.Key.Is.Press(Keys.C));
+
+            Assert.IsTrue(input.Key.Is.Release(Keys.A));
+            Assert.IsFalse(input.Key.Is.Release(Keys.B));
+            Assert.IsFalse(input.Key.Is.Release(Keys.C));
+
             input.Update();
+            Assert.IsFalse(input.Key.Is.Down(Keys.A));
+            Assert.IsFalse(input.Key.Is.Down(Keys.B));
             Assert.IsTrue(input.Key.Is.Down(Keys.C));
+
+            Assert.IsFalse(input.Key.Is.Press(Keys.A));
+            Assert.IsFalse(input.Key.Is.Press(Keys.B));
+            Assert.IsTrue(input.Key.Is.Press(Keys.C));
+
+            Assert.IsFalse(input.Key.Is.Release(Keys.A));
+            Assert.IsTrue(input.Key.Is.Release(Keys.B));
+            Assert.IsFalse(input.Key.Is.Release(Keys.C));
+
             input.Update();
-            Assert.IsTrue(input.Key.Is.Down(Keys.D));
+            Assert.IsFalse(input.Key.Is.Down(Keys.A));
+            Assert.IsFalse(input.Key.Is.Down(Keys.B));
+            Assert.IsTrue(input.Key.Is.Down(Keys.C));
+
+            Assert.IsFalse(input.Key.Is.Press(Keys.A));
+            Assert.IsFalse(input.Key.Is.Press(Keys.B));
+            Assert.IsFalse(input.Key.Is.Press(Keys.C));
+
+            Assert.IsFalse(input.Key.Is.Release(Keys.A));
+            Assert.IsFalse(input.Key.Is.Release(Keys.B));
+            Assert.IsFalse(input.Key.Is.Release(Keys.C));
         }
     }
 }
