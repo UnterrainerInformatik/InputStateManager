@@ -34,7 +34,7 @@ using NUnit.Framework;
 namespace NUnitTests
 {
     [TestFixture]
-    [Category("InputStateManager")]
+    [Category("InputStateManager.Key")]
     public class KeyTests
     {
         private InputManager input;
