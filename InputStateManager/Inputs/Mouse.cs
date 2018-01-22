@@ -79,7 +79,7 @@ namespace InputStateManager.Inputs
             State = provider.GetState();
         }
 
-        internal static bool IsUp(MouseState state, Button button)
+        internal static bool Up(MouseState state, Button button)
         {
             switch (button)
             {
@@ -98,7 +98,7 @@ namespace InputStateManager.Inputs
             }
         }
 
-        internal static bool IsDown(MouseState state, Button button)
+        internal static bool Down(MouseState state, Button button)
         {
             switch (button)
             {
@@ -129,11 +129,35 @@ namespace InputStateManager.Inputs
                 OldState = oldMapping;
             }
 
-            public bool Press(Button button)
-                => IsDown(State(), button) && IsUp(OldState(), button);
+            public bool Press(params Button[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (Mouse.Up(State(), button) || Mouse.Down(OldState(), button))
+                        return false;
+                return true;
+            }
+            public bool OnePress(params Button[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (Mouse.Down(State(), button) && Mouse.Up(OldState(), button))
+                        return true;
+                return false;
+            }
 
-            public bool Release(Button button)
-                => IsDown(OldState(), button) && IsUp(State(), button);
+            public bool Release(params Button[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (Mouse.Up(OldState(), button) || Mouse.Down(State(), button))
+                        return false;
+                return true;
+            }
+            public bool OneRelease(params Button[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (Mouse.Down(OldState(), button) && Mouse.Up(State(), button))
+                        return false;
+                return true;
+            }
 
             public Point PositionDelta => OldState().Position - State().Position;
             public int ScrollWheelDelta => State().ScrollWheelValue - OldState().ScrollWheelValue;
@@ -152,8 +176,35 @@ namespace InputStateManager.Inputs
                 State = mapping;
             }
 
-            public bool Up(Button button) => IsUp(State(), button);
-            public bool Down(Button button) => IsDown(State(), button);
+            public bool Up(params Button[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (Mouse.Down(State(), button))
+                        return false;
+                return true;
+            }
+            public bool OneUp(params Button[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (Mouse.Up(State(), button))
+                        return true;
+                return false;
+            }
+
+            public bool Down(params Button[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (Mouse.Up(State(), button))
+                        return false;
+                return true;
+            }
+            public bool OneDown(params Button[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (Mouse.Down(State(), button))
+                        return true;
+                return false;
+            }
 
             public Point Position => State().Position;
             public int ScrollWheelValue => State().ScrollWheelValue;
