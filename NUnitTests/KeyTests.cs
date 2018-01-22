@@ -57,6 +57,24 @@ namespace NUnitTests
         }
 
         [Test]
+        public void KeyDownMultipleInputsTriggers()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Down(Keys.A, Keys.B));
+        }
+
+        [Test]
+        public void KeyOneDownTriggers()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.OneDown(Keys.A, Keys.B));
+        }
+
+        [Test]
         public void KeyDownIsResetProperly()
         {
             providerMock.SetupSequence(o => o.GetState())
@@ -81,6 +99,30 @@ namespace NUnitTests
             Assert.IsFalse(input.Key.Is.Up(Keys.A));
             input.Update();
             Assert.IsTrue(input.Key.Is.Up(Keys.A));
+        }
+
+        [Test]
+        public void KeyUpMultipleInputsTriggers()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A, Keys.B))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Up(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Up(Keys.A, Keys.B));
+        }
+
+        [Test]
+        public void KeyOneUpTriggers()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.OneUp(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.OneUp(Keys.A, Keys.B));
         }
 
         [Test]
@@ -190,6 +232,34 @@ namespace NUnitTests
         }
 
         [Test]
+        public void WasDownGivesOldStateMultipleInputs()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A, Keys.B))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Down(Keys.A, Keys.B));
+            Assert.IsFalse(input.Key.Was.Down(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Down(Keys.A, Keys.B));
+            Assert.IsTrue(input.Key.Was.Down(Keys.A, Keys.B));
+        }
+
+        [Test]
+        public void WasUpGivesOldStateMultipleInputs()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A, Keys.B))
+                .Returns(new KeyboardState());
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Up(Keys.A, Keys.B));
+            Assert.IsTrue(input.Key.Was.Up(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Up(Keys.A, Keys.B));
+            Assert.IsFalse(input.Key.Was.Up(Keys.A, Keys.B));
+        }
+
+        [Test]
         public void AltPressIsTriggeredAndReleasedWithLeftAndRightAlt()
         {
             providerMock.SetupSequence(o => o.GetState())
@@ -288,6 +358,7 @@ namespace NUnitTests
             Assert.IsTrue(input.Key.Is.CapsLockDown);
             input.Update();
             Assert.IsFalse(input.Key.Is.CapsLockPress);
+            Assert.IsTrue(input.Key.Is.CapsLockRelease);
             Assert.IsTrue(input.Key.Is.CapsLockUp);
         }
 
@@ -306,7 +377,47 @@ namespace NUnitTests
             Assert.IsTrue(input.Key.Is.NumLockDown);
             input.Update();
             Assert.IsFalse(input.Key.Is.NumLockPress);
+            Assert.IsTrue(input.Key.Is.NumLockRelease);
             Assert.IsTrue(input.Key.Is.NumLockUp);
+        }
+
+        [Test]
+        public void PressAndReleaseWorksWithSeveralKeys()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A, Keys.B))
+                .Returns(new KeyboardState(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.Press(Keys.A, Keys.B));
+            Assert.IsFalse(input.Key.Is.Release(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Press(Keys.A, Keys.B));
+            Assert.IsFalse(input.Key.Is.Release(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.Press(Keys.A, Keys.B));
+            // A and B were not released at once.
+            Assert.IsFalse(input.Key.Is.Release(Keys.A, Keys.B));
+        }
+
+        [Test]
+        public void OnePressAndOneReleaseWorksWithSeveralKeys()
+        {
+            providerMock.SetupSequence(o => o.GetState())
+                .Returns(new KeyboardState(Keys.A))
+                .Returns(new KeyboardState(Keys.A, Keys.B))
+                .Returns(new KeyboardState(Keys.A));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.OnePress(Keys.A, Keys.B));
+            Assert.IsFalse(input.Key.Is.OneRelease(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsTrue(input.Key.Is.OnePress(Keys.A, Keys.B));
+            Assert.IsFalse(input.Key.Is.OneRelease(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.OnePress(Keys.A, Keys.B));
+            Assert.IsTrue(input.Key.Is.OneRelease(Keys.A, Keys.B));
+            input.Update();
+            Assert.IsFalse(input.Key.Is.OnePress(Keys.A, Keys.B));
+            Assert.IsTrue(input.Key.Is.OneRelease(Keys.A, Keys.B));
         }
     }
 }

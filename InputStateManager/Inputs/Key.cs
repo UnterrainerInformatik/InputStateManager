@@ -81,23 +81,50 @@ namespace InputStateManager.Inputs
                 OldState = oldMapping;
             }
 
-            public bool Press(Keys key) => State().IsKeyDown(key) && OldState().IsKeyUp(key);
-            public bool Release(Keys key) => OldState().IsKeyDown(key) && State().IsKeyUp(key);
+            public bool OnePress(params Keys[] keys)
+            {
+                foreach (var key in keys)
+                    if (State().IsKeyDown(key) && OldState().IsKeyUp(key))
+                        return true;
+                return false;
+            }
 
-            public bool ShiftPress => Press(Keys.LeftShift) || Press(Keys.RightShift);
-            public bool CtrlPress => Press(Keys.LeftControl) || Press(Keys.RightControl);
-            public bool AltPress => Press(Keys.LeftAlt) || Press(Keys.RightAlt);
-            public bool WindowsPress => Press(Keys.LeftWindows) || Press(Keys.RightWindows);
+            public bool Press(params Keys[] keys)
+            {
+                foreach (var key in keys)
+                    if (State().IsKeyUp(key) || OldState().IsKeyDown(key))
+                        return false;
+                return true;
+            }
 
-            public bool ShiftRelease => Release(Keys.LeftShift) && Release(Keys.RightShift);
-            public bool CtrlRelease => Release(Keys.LeftControl) && Release(Keys.RightControl);
-            public bool AltRelease => Release(Keys.LeftAlt) && Release(Keys.RightAlt);
-            public bool WindowsRelease => Release(Keys.LeftWindows) && Release(Keys.RightWindows);
+            public bool OneRelease(params Keys[] keys)
+            {
+                foreach (var key in keys)
+                    if (OldState().IsKeyDown(key) && State().IsKeyUp(key))
+                        return true;
+                return false;
+            }
 
+            public bool Release(params Keys[] keys)
+            {
+                foreach (var key in keys)
+                    if (OldState().IsKeyUp(key) || State().IsKeyDown(key))
+                        return false;
+                return true;
+            }
+
+            public bool ShiftPress => OnePress(Keys.LeftShift, Keys.RightShift);
+            public bool CtrlPress => OnePress(Keys.LeftControl, Keys.RightControl);
+            public bool AltPress => OnePress(Keys.LeftAlt, Keys.RightAlt);
+            public bool WindowsPress => OnePress(Keys.LeftWindows, Keys.RightWindows);
             public bool NumLockPress => State().NumLock && !OldState().NumLock;
-            public bool NumLockRelease => !State().NumLock && OldState().NumLock;
-
             public bool CapsLockPress => State().CapsLock && !OldState().CapsLock;
+
+            public bool ShiftRelease => Release(Keys.LeftShift, Keys.RightShift);
+            public bool CtrlRelease => Release(Keys.LeftControl, Keys.RightControl);
+            public bool AltRelease => Release(Keys.LeftAlt, Keys.RightAlt);
+            public bool WindowsRelease => Release(Keys.LeftWindows, Keys.RightWindows);
+            public bool NumLockRelease => !State().NumLock && OldState().NumLock;
             public bool CapsLockRelease => !State().CapsLock && OldState().CapsLock;
         }
 
@@ -111,21 +138,52 @@ namespace InputStateManager.Inputs
                 State = mapping;
             }
 
-            public bool Down(Keys key) => State().IsKeyDown(key);
-            public bool Up(Keys key) => State().IsKeyUp(key);
+            public bool OneDown(params Keys[] keys)
+            {
+                foreach (var key in keys)
+                    if (State().IsKeyDown(key))
+                        return true;
+                return false;
+            }
 
-            public bool ShiftDown => Down(Keys.LeftShift) || Down(Keys.RightShift);
-            public bool CtrlDown => Down(Keys.LeftControl) || Down(Keys.RightControl);
-            public bool AltDown => Down(Keys.LeftAlt) || Down(Keys.RightAlt);
-            public bool WindowsDown => Down(Keys.LeftWindows) || Down(Keys.RightWindows);
-            public bool ShiftUp => Up(Keys.LeftShift) && Up(Keys.RightShift);
-            public bool CtrlUp => Up(Keys.LeftControl) && Up(Keys.RightControl);
-            public bool AltUp => Up(Keys.LeftAlt) && Up(Keys.RightAlt);
-            public bool WindowsUp => Up(Keys.LeftWindows) && Up(Keys.RightWindows);
-            public bool NumLockUp => !State().NumLock;
+            public bool Down(params Keys[] keys)
+            {
+                foreach (var key in keys)
+                    if (State().IsKeyUp(key))
+                        return false;
+                return true;
+            }
+
+            public bool OneUp(params Keys[] keys)
+            {
+                foreach (var key in keys)
+                    if (State().IsKeyUp(key))
+                        return true;
+                return false;
+            }
+
+            public bool Up(params Keys[] keys)
+            {
+                foreach (var key in keys)
+                    if (State().IsKeyDown(key))
+                        return false;
+                return true;
+            }
+
+            public bool ShiftDown => OneDown(Keys.LeftShift, Keys.RightShift);
+            public bool CtrlDown => OneDown(Keys.LeftControl, Keys.RightControl);
+            public bool AltDown => OneDown(Keys.LeftAlt, Keys.RightAlt);
+            public bool WindowsDown => OneDown(Keys.LeftWindows, Keys.RightWindows);
             public bool NumLockDown => State().NumLock;
-            public bool CapsLockUp => !State().CapsLock;
             public bool CapsLockDown => State().CapsLock;
+
+            public bool ShiftUp => Up(Keys.LeftShift, Keys.RightShift);
+            public bool CtrlUp => Up(Keys.LeftControl, Keys.RightControl);
+            public bool AltUp => Up(Keys.LeftAlt, Keys.RightAlt);
+            public bool WindowsUp => Up(Keys.LeftWindows, Keys.RightWindows);
+            public bool NumLockUp => !State().NumLock;
+            public bool CapsLockUp => !State().CapsLock;
+
             public Keys[] GetPressedKeys => State().GetPressedKeys();
         }
     }

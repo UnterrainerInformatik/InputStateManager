@@ -94,6 +94,18 @@ if (input.Mouse.Was.Up(Mouse.Button.MIDDLE)) {...}
 // Somewhere in your code:
 
 if (input.Key.Is.Press(Keys.Escape)) {...}
+// Register keys that are currently held down:
+if (input.Key.Is.Down(Keys.A) && input.Key.Is.Down(Keys.B)) {...}
+// Same as:
+if (input.Key.Is.Down(Keys.A, Keys.B)) {...}
+// Or:
+if (input.Key.Is.Down(new []{Keys.A, Keys.B})) {...}
+// Register key-presses (down -> up):
+if (input.Key.Is.Press(Keys.A) || input.Key.Is.Press(Keys.B)) {...}
+// Same as:
+if (input.Key.Is.OnePress(Keys.A, Keys.B)) {...}
+// Or:
+if (input.Key.Is.OnePress(new []{Keys.A, Keys.B})) {...}
 // Query for any SHIFT-key pressed:
 if (input.Key.Is.Down(Keys.A) && input.Key.Is.ShiftDown) {...}
 // Same for CTRL and ALT:
@@ -101,6 +113,8 @@ if (input.Key.Is.CtrlRelease() || input.Key.Is.AltPress()) {...}
 // And NumLock and CapsLock:
 if (input.Key.Is.NumLockRelease() || input.Key.Is.CapsLockPress()) {..}
 ...
+
+
 ```
 
 ### GamePad
