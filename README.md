@@ -110,8 +110,12 @@ if (input.Key.Is.OnePress(new []{Keys.A, Keys.B})) {...}
 if (input.Key.Is.Down(Keys.A) && input.Key.Is.ShiftDown) {...}
 // Same for CTRL and ALT:
 if (input.Key.Is.CtrlRelease() || input.Key.Is.AltPress()) {...}
-// And NumLock and CapsLock:
-if (input.Key.Is.NumLockRelease() || input.Key.Is.CapsLockPress()) {..}
+// And NumLock- and CapsLock-states:
+if (input.Key.Is.NumLockOn() && input.Key.Is.CapsLockOff()) {..}
+// And the transitions of those states:
+if (input.Key.Is.NumLockStateExit() || input.Key.Is.CapsLockStateEnter()) {..}
+// Or their respective key-presses or up-down values:
+if (input.Key.Is.Down(Keys.NumLock) || input.Key.Is.Release(Keys.CapsLock))
 ...
 
 

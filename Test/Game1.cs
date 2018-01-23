@@ -125,10 +125,10 @@ namespace Test
             b.Append($"Keys NumLock Down: {input.Key.Is.Down(Keys.NumLock)} " +
                      $"Pressed: {input.Key.Is.Press(Keys.NumLock)} " +
                      $"Released: {input.Key.Is.Release(Keys.NumLock)}\n");
-            b.Append($"bool NumLock on: {input.Key.Is.NumLockStateOn} / {input.Key.Is.NumLockStatePress}\n");
-            b.Append($"bool NumLock off: {input.Key.Is.NumLockStateOff} / {input.Key.Is.NumLockStateRelease}\n");
-            b.Append($"bool CapsLock on: {input.Key.Is.CapsLockStateOn} / {input.Key.Is.CapsLockStatePress}\n");
-            b.Append($"bool CapsLock off: {input.Key.Is.CapsLockStateOff} / {input.Key.Is.CapsLockStateRelease}\n");
+            b.Append($"bool NumLock on: {input.Key.Is.NumLockStateOn} / {input.Key.Is.NumLockStateEnter}\n");
+            b.Append($"bool NumLock off: {input.Key.Is.NumLockStateOff} / {input.Key.Is.NumLockStateExit}\n");
+            b.Append($"bool CapsLock on: {input.Key.Is.CapsLockStateOn} / {input.Key.Is.CapsLockStateEnter}\n");
+            b.Append($"bool CapsLock off: {input.Key.Is.CapsLockStateOff} / {input.Key.Is.CapsLockStateExit}\n");
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.DrawString(font, b, new Vector2(10, 10), Color.White);

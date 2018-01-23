@@ -351,14 +351,14 @@ namespace NUnitTests
                 .Returns(new KeyboardState(new Keys[] { }, true))
                 .Returns(new KeyboardState());
             input.Update();
-            Assert.IsTrue(input.Key.Is.CapsLockStatePress);
+            Assert.IsTrue(input.Key.Is.CapsLockStateEnter);
             Assert.IsTrue(input.Key.Is.CapsLockStateOn);
             input.Update();
-            Assert.IsFalse(input.Key.Is.CapsLockStatePress);
+            Assert.IsFalse(input.Key.Is.CapsLockStateEnter);
             Assert.IsTrue(input.Key.Is.CapsLockStateOn);
             input.Update();
-            Assert.IsFalse(input.Key.Is.CapsLockStatePress);
-            Assert.IsTrue(input.Key.Is.CapsLockStateRelease);
+            Assert.IsFalse(input.Key.Is.CapsLockStateEnter);
+            Assert.IsTrue(input.Key.Is.CapsLockStateExit);
             Assert.IsTrue(input.Key.Is.CapsLockStateOff);
         }
 
@@ -370,14 +370,14 @@ namespace NUnitTests
                 .Returns(new KeyboardState(new Keys[] { }, false, true))
                 .Returns(new KeyboardState());
             input.Update();
-            Assert.IsTrue(input.Key.Is.NumLockStatePress);
+            Assert.IsTrue(input.Key.Is.NumLockStateEnter);
             Assert.IsTrue(input.Key.Is.NumLockStateOn);
             input.Update();
-            Assert.IsFalse(input.Key.Is.NumLockStatePress);
+            Assert.IsFalse(input.Key.Is.NumLockStateEnter);
             Assert.IsTrue(input.Key.Is.NumLockStateOn);
             input.Update();
-            Assert.IsFalse(input.Key.Is.NumLockStatePress);
-            Assert.IsTrue(input.Key.Is.NumLockStateRelease);
+            Assert.IsFalse(input.Key.Is.NumLockStateEnter);
+            Assert.IsTrue(input.Key.Is.NumLockStateExit);
             Assert.IsTrue(input.Key.Is.NumLockStateOff);
         }
 

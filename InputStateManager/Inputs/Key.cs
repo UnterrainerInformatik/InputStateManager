@@ -117,15 +117,15 @@ namespace InputStateManager.Inputs
             public bool CtrlPress => OnePress(Keys.LeftControl, Keys.RightControl);
             public bool AltPress => OnePress(Keys.LeftAlt, Keys.RightAlt);
             public bool WindowsPress => OnePress(Keys.LeftWindows, Keys.RightWindows);
-            public bool NumLockStatePress => State().NumLock && !OldState().NumLock;
-            public bool CapsLockStatePress => State().CapsLock && !OldState().CapsLock;
+            public bool NumLockStateEnter => State().NumLock && !OldState().NumLock;
+            public bool CapsLockStateEnter => State().CapsLock && !OldState().CapsLock;
 
             public bool ShiftRelease => Release(Keys.LeftShift, Keys.RightShift);
             public bool CtrlRelease => Release(Keys.LeftControl, Keys.RightControl);
             public bool AltRelease => Release(Keys.LeftAlt, Keys.RightAlt);
             public bool WindowsRelease => Release(Keys.LeftWindows, Keys.RightWindows);
-            public bool NumLockStateRelease => !State().NumLock && OldState().NumLock;
-            public bool CapsLockStateRelease => !State().CapsLock && OldState().CapsLock;
+            public bool NumLockStateExit => !State().NumLock && OldState().NumLock;
+            public bool CapsLockStateExit => !State().CapsLock && OldState().CapsLock;
         }
 
         [PublicAPI]
