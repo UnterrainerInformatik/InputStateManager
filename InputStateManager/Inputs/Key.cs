@@ -117,15 +117,15 @@ namespace InputStateManager.Inputs
             public bool CtrlPress => OnePress(Keys.LeftControl, Keys.RightControl);
             public bool AltPress => OnePress(Keys.LeftAlt, Keys.RightAlt);
             public bool WindowsPress => OnePress(Keys.LeftWindows, Keys.RightWindows);
-            public bool NumLockPress => State().NumLock && !OldState().NumLock;
-            public bool CapsLockPress => State().CapsLock && !OldState().CapsLock;
+            public bool NumLockStatePress => State().NumLock && !OldState().NumLock;
+            public bool CapsLockStatePress => State().CapsLock && !OldState().CapsLock;
 
             public bool ShiftRelease => Release(Keys.LeftShift, Keys.RightShift);
             public bool CtrlRelease => Release(Keys.LeftControl, Keys.RightControl);
             public bool AltRelease => Release(Keys.LeftAlt, Keys.RightAlt);
             public bool WindowsRelease => Release(Keys.LeftWindows, Keys.RightWindows);
-            public bool NumLockRelease => !State().NumLock && OldState().NumLock;
-            public bool CapsLockRelease => !State().CapsLock && OldState().CapsLock;
+            public bool NumLockStateRelease => !State().NumLock && OldState().NumLock;
+            public bool CapsLockStateRelease => !State().CapsLock && OldState().CapsLock;
         }
 
         [PublicAPI]
@@ -174,15 +174,16 @@ namespace InputStateManager.Inputs
             public bool CtrlDown => OneDown(Keys.LeftControl, Keys.RightControl);
             public bool AltDown => OneDown(Keys.LeftAlt, Keys.RightAlt);
             public bool WindowsDown => OneDown(Keys.LeftWindows, Keys.RightWindows);
-            public bool NumLockDown => State().NumLock;
-            public bool CapsLockDown => State().CapsLock;
-
+            
             public bool ShiftUp => Up(Keys.LeftShift, Keys.RightShift);
             public bool CtrlUp => Up(Keys.LeftControl, Keys.RightControl);
             public bool AltUp => Up(Keys.LeftAlt, Keys.RightAlt);
             public bool WindowsUp => Up(Keys.LeftWindows, Keys.RightWindows);
-            public bool NumLockUp => !State().NumLock;
-            public bool CapsLockUp => !State().CapsLock;
+
+            public bool NumLockStateOn => State().NumLock;
+            public bool CapsLockStateOn => State().CapsLock;
+            public bool NumLockStateOff => !State().NumLock;
+            public bool CapsLockStateOff => !State().CapsLock;
 
             public Keys[] GetPressedKeys => State().GetPressedKeys();
         }

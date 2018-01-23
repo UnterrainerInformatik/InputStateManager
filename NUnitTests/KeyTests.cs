@@ -351,15 +351,15 @@ namespace NUnitTests
                 .Returns(new KeyboardState(new Keys[] { }, true))
                 .Returns(new KeyboardState());
             input.Update();
-            Assert.IsTrue(input.Key.Is.CapsLockPress);
-            Assert.IsTrue(input.Key.Is.CapsLockDown);
+            Assert.IsTrue(input.Key.Is.CapsLockStatePress);
+            Assert.IsTrue(input.Key.Is.CapsLockStateOn);
             input.Update();
-            Assert.IsFalse(input.Key.Is.CapsLockPress);
-            Assert.IsTrue(input.Key.Is.CapsLockDown);
+            Assert.IsFalse(input.Key.Is.CapsLockStatePress);
+            Assert.IsTrue(input.Key.Is.CapsLockStateOn);
             input.Update();
-            Assert.IsFalse(input.Key.Is.CapsLockPress);
-            Assert.IsTrue(input.Key.Is.CapsLockRelease);
-            Assert.IsTrue(input.Key.Is.CapsLockUp);
+            Assert.IsFalse(input.Key.Is.CapsLockStatePress);
+            Assert.IsTrue(input.Key.Is.CapsLockStateRelease);
+            Assert.IsTrue(input.Key.Is.CapsLockStateOff);
         }
 
         [Test]
@@ -370,15 +370,15 @@ namespace NUnitTests
                 .Returns(new KeyboardState(new Keys[] { }, false, true))
                 .Returns(new KeyboardState());
             input.Update();
-            Assert.IsTrue(input.Key.Is.NumLockPress);
-            Assert.IsTrue(input.Key.Is.NumLockDown);
+            Assert.IsTrue(input.Key.Is.NumLockStatePress);
+            Assert.IsTrue(input.Key.Is.NumLockStateOn);
             input.Update();
-            Assert.IsFalse(input.Key.Is.NumLockPress);
-            Assert.IsTrue(input.Key.Is.NumLockDown);
+            Assert.IsFalse(input.Key.Is.NumLockStatePress);
+            Assert.IsTrue(input.Key.Is.NumLockStateOn);
             input.Update();
-            Assert.IsFalse(input.Key.Is.NumLockPress);
-            Assert.IsTrue(input.Key.Is.NumLockRelease);
-            Assert.IsTrue(input.Key.Is.NumLockUp);
+            Assert.IsFalse(input.Key.Is.NumLockStatePress);
+            Assert.IsTrue(input.Key.Is.NumLockStateRelease);
+            Assert.IsTrue(input.Key.Is.NumLockStateOff);
         }
 
         [Test]

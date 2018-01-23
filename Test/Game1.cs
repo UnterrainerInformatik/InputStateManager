@@ -119,7 +119,17 @@ namespace Test
                      $"Pressed: {input.Mouse.Is.Press(Mouse.Button.RIGHT)} " +
                      $"Released: {input.Mouse.Is.Release(Mouse.Button.RIGHT)}\n");
             b.Append($"GamePad: {input.Pad.Is.DPad.Down(Pad.DPadDirection.UP)}\n");
-            input.Pad.Is.Triggers.Right();
+            b.Append($"Keys CapsLock Down: {input.Key.Is.Down(Keys.CapsLock)} " +
+                     $"Pressed: {input.Key.Is.Press(Keys.CapsLock)} " +
+                     $"Released: {input.Key.Is.Release(Keys.CapsLock)}\n");
+            b.Append($"Keys NumLock Down: {input.Key.Is.Down(Keys.NumLock)} " +
+                     $"Pressed: {input.Key.Is.Press(Keys.NumLock)} " +
+                     $"Released: {input.Key.Is.Release(Keys.NumLock)}\n");
+            b.Append($"bool NumLock on: {input.Key.Is.NumLockStateOn} / {input.Key.Is.NumLockStatePress}\n");
+            b.Append($"bool NumLock off: {input.Key.Is.NumLockStateOff} / {input.Key.Is.NumLockStateRelease}\n");
+            b.Append($"bool CapsLock on: {input.Key.Is.CapsLockStateOn} / {input.Key.Is.CapsLockStatePress}\n");
+            b.Append($"bool CapsLock off: {input.Key.Is.CapsLockStateOff} / {input.Key.Is.CapsLockStateRelease}\n");
+
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.DrawString(font, b, new Vector2(10, 10), Color.White);
             spriteBatch.End();
