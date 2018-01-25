@@ -33,6 +33,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace InputStateManager.Inputs
 {
+    /// <summary>
+    ///     Relies on the PlayerIndex enumeration to get the number of valid inputs and their respecitve indexes.
+    /// </summary>
     [PublicAPI]
     public class Pad
     {
@@ -49,7 +52,7 @@ namespace InputStateManager.Inputs
         public PlayerIndex PlayerIndex;
         public GamePadState OldState { get; private set; }
         public GamePadState State { get; private set; }
-        
+
         /// <summary>
         ///     Gets information about the current state. Including calculated delta values.
         /// </summary>
@@ -76,7 +79,7 @@ namespace InputStateManager.Inputs
             if (provider == null)
                 return;
             OldState = State;
-            State = provider.GetState((int)PlayerIndex);
+            State = provider.GetState((int) PlayerIndex);
         }
 
         [PublicAPI]
@@ -94,16 +97,42 @@ namespace InputStateManager.Inputs
                 Triggers = new TriggersSub(State, OldState);
             }
 
-            public bool Press(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => State().IsButtonDown(button) && OldState().IsButtonUp(button);
+            public bool Press(params Buttons[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (State().IsButtonUp(button) || OldState().IsButtonDown(button))
+                        return false;
+                return true;
+            }
 
-            public bool Release(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => OldState().IsButtonDown(button) && State().IsButtonUp(button);
+            public bool OnePress(params Buttons[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (State().IsButtonDown(button) && OldState().IsButtonUp(button))
+                        return true;
+                return false;
+            }
+
+            public bool Release(params Buttons[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (OldState().IsButtonUp(button) || State().IsButtonDown(button))
+                        return false;
+                return true;
+            }
+
+            public bool OneRelease(params Buttons[] buttons)
+            {
+                foreach (var button in buttons)
+                    if (OldState().IsButtonDown(button) && State().IsButtonUp(button))
+                        return true;
+                return false;
+            }
 
             public new DPadSub DPad { get; }
             public new ThumbSticksSub ThumbSticks;
             public new TriggersSub Triggers;
-            
+
             public bool JustConnected
                 => !OldState().IsConnected && State().IsConnected;
         }
@@ -125,11 +154,49 @@ namespace InputStateManager.Inputs
 
             public GamePadButtons Buttons => State().Buttons;
 
-            public bool Down(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => State().IsButtonDown(button);
+            public bool Down(params Buttons[] buttons)
+            {
+                foreach (var button in buttons)
+                {
+                    if (State().IsButtonUp(button))
+                        return false;
+                }
 
-            public bool Up(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => State().IsButtonUp(button);
+                return true;
+            }
+
+            public bool OneDown(params Buttons[] buttons)
+            {
+                foreach (var button in buttons)
+                {
+                    if (State().IsButtonDown(button))
+                        return true;
+                }
+
+                return false;
+            }
+
+            public bool Up(params Buttons[] buttons)
+            {
+                foreach (var button in buttons)
+                {
+                    if (State().IsButtonDown(button))
+                        return false;
+                }
+
+                return true;
+            }
+
+            public bool OneUp(params Buttons[] buttons)
+            {
+                foreach (var button in buttons)
+                {
+                    if (State().IsButtonUp(button))
+                        return true;
+                }
+
+                return false;
+            }
 
             public GamePadDPad DPadValues => State().DPad;
             public DPadOldSub DPad { get; }
@@ -154,11 +221,11 @@ namespace InputStateManager.Inputs
                 OldState = oldMapping;
             }
 
-            public bool Press(DPadDirection direction, PlayerIndex p = PlayerIndex.One)
-                => Down(State, direction, p) && Up(OldState, direction, p);
+            public bool Press(DPadDirection direction)
+                => Down(State, direction) && Up(OldState, direction);
 
-            public bool Release(DPadDirection direction, PlayerIndex p = PlayerIndex.One)
-                => Down(OldState, direction, p) && Up(State, direction, p);
+            public bool Release(DPadDirection direction)
+                => Down(OldState, direction) && Up(State, direction);
         }
 
         [PublicAPI]
@@ -171,8 +238,8 @@ namespace InputStateManager.Inputs
                 State = mapping;
             }
 
-            public bool Down(DPadDirection direction, PlayerIndex p = PlayerIndex.One) => Down(State, direction, p);
-            public bool Up(DPadDirection direction, PlayerIndex p = PlayerIndex.One) => Up(State, direction, p);
+            public bool Down(DPadDirection direction) => Down(State, direction);
+            public bool Up(DPadDirection direction) => Up(State, direction);
 
             protected bool Down(Func<GamePadState> mapping, DPadDirection direction,
                 PlayerIndex p = PlayerIndex.One)
@@ -192,8 +259,7 @@ namespace InputStateManager.Inputs
                 return false;
             }
 
-            protected bool Up(Func<GamePadState> mapping, DPadDirection direction,
-                PlayerIndex p = PlayerIndex.One)
+            protected bool Up(Func<GamePadState> mapping, DPadDirection direction)
             {
                 switch (direction)
                 {

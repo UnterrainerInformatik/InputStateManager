@@ -119,7 +119,7 @@ namespace NUnitTests.Tests
             input.Update();
             Assert.IsTrue(input.Pad().Is.Down(Buttons.A));
         }
-        /*
+
         [Test]
         public void ButtonDownMultipleInputsTriggers()
         {
@@ -128,7 +128,7 @@ namespace NUnitTests.Tests
             input.Update();
             Assert.IsTrue(input.Pad().Is.Down(Buttons.A, Buttons.B));
         }
-        
+
         [Test]
         public void ButtonOneDownTriggers()
         {
@@ -136,7 +136,7 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A));
             input.Update();
             Assert.IsTrue(input.Pad().Is.OneDown(Buttons.A, Buttons.B));
-        }*/
+        }
 
         [Test]
         public void ButtonDownIsResetProperly()
@@ -165,7 +165,6 @@ namespace NUnitTests.Tests
             Assert.IsTrue(input.Pad().Is.Up(Buttons.A));
         }
 
-        /*
         [Test]
         public void ButtonUpMultipleInputsTriggers()
         {
@@ -189,7 +188,7 @@ namespace NUnitTests.Tests
             input.Update();
             Assert.IsTrue(input.Pad().Is.OneUp(Buttons.A, Buttons.B));
         }
-        */
+
         [Test]
         public void ButtonUpIsResetProperly()
         {
@@ -296,40 +295,39 @@ namespace NUnitTests.Tests
             Assert.IsFalse(input.Pad().Was.Up(Buttons.A));
         }
 
-        /*
-                [Test]
-                public void WasDownGivesOldStateMultipleInputs()
-                {
-                    providerMock.SetupSequence(o => o.GetState(0))
-                        .Returns(GetStateB(Buttons.A | Buttons.B))
-                        .Returns(IdleState);
-                    input.Update();
-                    Assert.IsTrue(input.Pad().Is.Down(Buttons.A, Buttons.B));
-                    Assert.IsFalse(input.Pad().Was.Down(Buttons.A, Buttons.B));
-                    input.Update();
-                    Assert.IsFalse(input.Pad().Is.Down(Buttons.A, Buttons.B));
-                    Assert.IsTrue(input.Pad().Was.Down(Buttons.A, Buttons.B));
-                }
+        [Test]
+        public void WasDownGivesOldStateMultipleInputs()
+        {
+            providerMock.SetupSequence(o => o.GetState(0))
+                .Returns(GetStateB(Buttons.A | Buttons.B))
+                .Returns(IdleState);
+            input.Update();
+            Assert.IsTrue(input.Pad().Is.Down(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Was.Down(Buttons.A, Buttons.B));
+            input.Update();
+            Assert.IsFalse(input.Pad().Is.Down(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Was.Down(Buttons.A, Buttons.B));
+        }
 
-                [Test]
-                public void WasUpGivesOldStateMultipleInputs()
-                {
-                    providerMock.SetupSequence(o => o.GetState(0))
-                        .Returns(GetStateB(Buttons.A | Buttons.B))
-                        .Returns(IdleState);
-                    input.Update();
-                    Assert.IsFalse(input.Pad().Is.Up(Buttons.A, Buttons.B));
-                    Assert.IsTrue(input.Pad().Was.Up(Buttons.A, Buttons.B));
-                    input.Update();
-                    Assert.IsTrue(input.Pad().Is.Up(Buttons.A, Buttons.B));
-                    Assert.IsFalse(input.Pad().Was.Up(Buttons.A, Buttons.B));
-                }
+        [Test]
+        public void WasUpGivesOldStateMultipleInputs()
+        {
+            providerMock.SetupSequence(o => o.GetState(0))
+                .Returns(GetStateB(Buttons.A | Buttons.B))
+                .Returns(IdleState);
+            input.Update();
+            Assert.IsFalse(input.Pad().Is.Up(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Was.Up(Buttons.A, Buttons.B));
+            input.Update();
+            Assert.IsTrue(input.Pad().Is.Up(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Was.Up(Buttons.A, Buttons.B));
+        }
 
         [Test]
         public void PressAndReleaseWorksWithSeveralKeys()
         {
             providerMock.SetupSequence(o => o.GetState(0))
-                .Returns(GetStateB(Buttons.A| Buttons.B))
+                .Returns(GetStateB(Buttons.A | Buttons.B))
                 .Returns(GetStateB(Buttons.A));
             input.Update();
             Assert.IsTrue(input.Pad().Is.Press(Buttons.A, Buttons.B));
@@ -362,6 +360,6 @@ namespace NUnitTests.Tests
             input.Update();
             Assert.IsFalse(input.Pad().Is.OnePress(Buttons.A, Buttons.B));
             Assert.IsTrue(input.Pad().Is.OneRelease(Buttons.A, Buttons.B));
-        }*/
+        }
     }
 }
