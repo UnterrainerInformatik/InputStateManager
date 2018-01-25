@@ -60,10 +60,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\TouchTests.cs" />
-    <Compile Include="Tests\MouseTests.cs" />
-    <Compile Include="Tests\PadTests.cs" />
-    <Compile Include="Tests\KeyTests.cs" />
+    <Compile Include="Tests\Key\KeyTests.Others.cs" />
+    <Compile Include="Tests\Key\KeyTests.Was.cs" />
+    <Compile Include="Tests\Key\KeyTests.PressRelease.cs" />
+    <Compile Include="Tests\Mouse\MouseTests.Was.cs" />
+    <Compile Include="Tests\Mouse\MouseTests.PressRelease.cs" />
+    <Compile Include="Tests\Pad\PadTests.Others.cs" />
+    <Compile Include="Tests\Pad\PadTests.Was.cs" />
+    <Compile Include="Tests\Pad\PadTests.PressRelease.cs" />
+    <Compile Include="Tests\Touch\TouchTests.cs" />
+    <Compile Include="Tests\Mouse\MouseTests.UpDown.cs" />
+    <Compile Include="Tests\Pad\PadTests.UpDown.cs" />
+    <Compile Include="Tests\Key\KeyTests.UpDown.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

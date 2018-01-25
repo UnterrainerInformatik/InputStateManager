@@ -33,7 +33,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Moq;
 using NUnit.Framework;
 
-namespace NUnitTests.Tests
+namespace NUnitTests.Tests.Touch
 {
     [TestFixture]
     [Category("InputStateManager.Mouse")]
