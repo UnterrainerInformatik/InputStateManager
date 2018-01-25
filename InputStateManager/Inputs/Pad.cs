@@ -57,7 +57,7 @@ namespace InputStateManager.Inputs
         public IsSub Is { get; }
 
         /// <summary>
-        ///     Gets information about the previous state. No delta values included, since it has no 'old' state to refer to.
+        ///     Gets information about the previous state. No delta values included, since there are no 'old' state to refer to.
         /// </summary>
         public WasSub Was { get; }
 
@@ -75,12 +75,12 @@ namespace InputStateManager.Inputs
         }
 
         [PublicAPI]
-        public class IsSub
+        public class IsSub : WasSub
         {
             private Func<PlayerIndex, GamePadState> State { get; set; }
             private Func<PlayerIndex, GamePadState> OldState { get; set; }
 
-            internal IsSub(Func<PlayerIndex, GamePadState> mapping, Func<PlayerIndex, GamePadState> oldMapping)
+            internal IsSub(Func<PlayerIndex, GamePadState> mapping, Func<PlayerIndex, GamePadState> oldMapping) : base(mapping)
             {
                 State = mapping;
                 OldState = oldMapping;
@@ -89,33 +89,16 @@ namespace InputStateManager.Inputs
                 Triggers = new TriggersSub(State, OldState);
             }
 
-            public bool Connected(PlayerIndex p = PlayerIndex.One) => State(p).IsConnected;
-
-            public GamePadButtons Buttons(PlayerIndex p = PlayerIndex.One) => State(p).Buttons;
-
-            public bool Down(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => State(p).IsButtonDown(button);
-
-            public bool Up(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => State(p).IsButtonUp(button);
-
             public bool Press(Buttons button, PlayerIndex p = PlayerIndex.One)
                 => State(p).IsButtonDown(button) && OldState(p).IsButtonUp(button);
 
             public bool Release(Buttons button, PlayerIndex p = PlayerIndex.One)
                 => OldState(p).IsButtonDown(button) && State(p).IsButtonUp(button);
 
-            public GamePadDPad DPadValues(PlayerIndex p = PlayerIndex.One) => State(p).DPad;
-            public DPadSub DPad { get; }
-
-            public GamePadThumbSticks ThumbSticksValues(PlayerIndex p = PlayerIndex.One) => State(p).ThumbSticks;
-            public ThumbSticksSub ThumbSticks;
-
-            public GamePadTriggers TriggersValues(PlayerIndex p = PlayerIndex.One) => State(p).Triggers;
-            public TriggersSub Triggers;
-
-            public int PacketNumber(PlayerIndex p = PlayerIndex.One) => State(p).PacketNumber;
-
+            public new DPadSub DPad { get; }
+            public new ThumbSticksSub ThumbSticks;
+            public new TriggersSub Triggers;
+            
             public bool JustConnected(PlayerIndex p = PlayerIndex.One)
                 => !OldState(p).IsConnected && State(p).IsConnected;
         }
