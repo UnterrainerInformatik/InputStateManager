@@ -32,7 +32,7 @@ using Microsoft.Xna.Framework.Input;
 using Moq;
 using NUnit.Framework;
 
-namespace NUnitTests
+namespace NUnitTests.Tests
 {
     [TestFixture]
     [Category("InputStateManager.Pad")]

@@ -25,39 +25,54 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
+using System;
 using InputStateManager;
 using InputStateManager.Inputs.InputProviders.Interfaces;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Moq;
 using NUnit.Framework;
 
-namespace NUnitTests
+namespace NUnitTests.Tests
 {
     [TestFixture]
     [Category("InputStateManager.Mouse")]
-    public class MouseTests
+    public class TouchTests
     {
         private InputManager input;
-        private Mock<IMouseInputProvider> providerMock;
+        private Mock<ITouchInputProvider> providerMock;
 
         [SetUp]
         public void Setup()
         {
-            providerMock = new Mock<IMouseInputProvider>();
-            input = new InputManager(null, providerMock.Object, null, null);
+            providerMock = new Mock<ITouchInputProvider>();
+            input = new InputManager(null, null, null, providerMock.Object);
         }
 
-        private static MouseState IdleState => new MouseState(0, 0, 0, ButtonState.Released, ButtonState.Released,
-            ButtonState.Released, ButtonState.Released, ButtonState.Released);
-
         [Test]
-        public void KeyDownTriggers()
+        public void MouseTests()
         {
             providerMock.SetupSequence(o => o.GetState())
-                .Returns(IdleState);
+                .Returns(new TouchCollection());
+            providerMock.SetupSequence(o => o.GetDisplayOrientation())
+                .Returns(DisplayOrientation.Default);
+            providerMock.SetupSequence(o => o.GetDisplayHeight())
+                .Returns(780);
+            providerMock.SetupSequence(o => o.GetDisplayWidth())
+                .Returns(1280);
+            providerMock.SetupSequence(o => o.GetEnableMouseGestures())
+                .Returns(true);
+            providerMock.SetupSequence(o => o.GetEnableMouseTouchPoint())
+                .Returns(true);
+            providerMock.SetupSequence(o => o.GetEnabledGestures())
+                .Returns(GestureType.FreeDrag | GestureType.Flick);
+            providerMock.SetupSequence(o => o.GetIsGestureAvailable())
+                .Returns(true);
+            providerMock.SetupSequence(o => o.ReadGesture())
+                .Returns(new GestureSample(GestureType.Hold, TimeSpan.FromMilliseconds(12), Vector2.Zero, Vector2.Zero,
+                    Vector2.Zero, Vector2.Zero));
             input.Update();
-            Assert.AreEqual(Point.Zero, input.Mouse.Is.Position);
+            Assert.IsTrue(input.Touch.IsGestureAvailable);
         }
     }
 }

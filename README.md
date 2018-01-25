@@ -80,6 +80,10 @@ if (input.Mouse.Is.Release(Mouse.Button.LEFT)) {...}
   // ...which is equivalent to:
   if(input.Mouse.Is.Up(Mouse.Button.LEFT) && 
      input.Mouse.Was.Down(Mouse.Button.LEFT))) {...}
+// If you want to see if both buttons are currently down:
+if (input.Mouse.Is.Down(Mouse.Button.Left, Mouse.Button.Right)) {...}
+// Or, for example, if you wanna see if one of those is down:
+if (input.Mouse.Is.OneDown(Mouse.Button.Left, Mouse.Button.Right)) {...}
 
 var positionDelta = input.Mouse.Is.PositionDelta;
 var scrollWheelDelta = input.Mouse.Is.ScrollWheelDelta;

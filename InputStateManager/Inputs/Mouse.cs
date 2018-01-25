@@ -155,8 +155,8 @@ namespace InputStateManager.Inputs
             {
                 foreach (var button in buttons)
                     if (Mouse.Down(OldState(), button) && Mouse.Up(State(), button))
-                        return false;
-                return true;
+                        return true;
+                return false;
             }
 
             public Point PositionDelta => OldState().Position - State().Position;

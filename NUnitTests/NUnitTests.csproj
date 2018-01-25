@@ -60,10 +60,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TouchTests.cs" />
-    <Compile Include="MouseTests.cs" />
-    <Compile Include="PadTests.cs" />
-    <Compile Include="KeyTests.cs" />
+    <Compile Include="Tests\TouchTests.cs" />
+    <Compile Include="Tests\MouseTests.cs" />
+    <Compile Include="Tests\PadTests.cs" />
+    <Compile Include="Tests\KeyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
