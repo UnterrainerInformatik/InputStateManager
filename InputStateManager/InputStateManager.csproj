@@ -44,7 +44,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Inputs\GamePad\GamePadStates.cs" />
     <Compile Include="Inputs\InputProviders\Implementations\XnaPadInputProvider.cs" />
     <Compile Include="Inputs\InputProviders\Implementations\XnaTouchInputProvider.cs" />
     <Compile Include="Inputs\InputProviders\Implementations\XnaMouseInputProvider.cs" />

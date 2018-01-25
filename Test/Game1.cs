@@ -85,7 +85,7 @@ namespace Test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (input.Pad.Is.Press(Buttons.Back) || input.Key.Is.Press(Keys.Escape))
+            if (input.Pad().Is.Press(Buttons.Back) || input.Key.Is.Press(Keys.Escape))
                 Exit();
             input.Update();
             base.Update(gameTime);
@@ -118,7 +118,7 @@ namespace Test
             b.Append($"Mouse Button Right Down: {input.Mouse.Is.Down(Mouse.Button.RIGHT)} " +
                      $"Pressed: {input.Mouse.Is.Press(Mouse.Button.RIGHT)} " +
                      $"Released: {input.Mouse.Is.Release(Mouse.Button.RIGHT)}\n");
-            b.Append($"GamePad: {input.Pad.Is.DPad.Down(Pad.DPadDirection.UP)}\n");
+            b.Append($"GamePad: {input.Pad().Is.DPad.Down(Pad.DPadDirection.UP)}\n");
             b.Append($"Keys CapsLock Down: {input.Key.Is.Down(Keys.CapsLock)} " +
                      $"Pressed: {input.Key.Is.Press(Keys.CapsLock)} " +
                      $"Released: {input.Key.Is.Release(Keys.CapsLock)}\n");

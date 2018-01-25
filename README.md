@@ -129,23 +129,23 @@ if (input.Key.Is.Down(Keys.NumLock) || input.Key.Is.Release(Keys.CapsLock))
 
 ```c#
 // Somewhere in your code:
-if (input.Pad.Is.Press(Buttons.A, PlayerIndex.One)) {...}
+if (input.Pad(PlayerIndex.One).Is.Press(Buttons.A)) {...}
 // For prototypes the PlayerIndex defaults to One on all calls:
-if (input.Pad.Is.Press(Buttons.A)) {...} //Same as above
+if (input.Pad().Is.Press(Buttons.A)) {...} //Same as above
 // In a real game you'd have a variable as PlayerIndex, like:
 PlayerIndex p;
 // Then, for example:
-if (input.Pad.Is.Connected(p) && input.Pad.Is.Release(Buttons.Back, p)) {...}
+if (input.Pad(p).Is.Connected && input.Pad(p).Is.Release(Buttons.Back)) {...}
 // Or to catch the event of a GamePad being connected:
-if (input.Pad.Is.JustConnected(p)) {...}
+if (input.Pad(p).Is.JustConnected {...}
 // Or:
-if (input.Pad.Is.DPad.Press(Pad.DPadDirection.LEFT, p) {...}
+if (input.Pad(p).Is.DPad.Press(Pad.DPadDirection.LEFT) {...}
 // Or for the thumb-sticks (directional vector2):
-Vector2 thumbPos = input.Pad.Is.ThumbSticks.Left();
-Vector2 thumbDelta = input.Pad.Is.ThumbSticks.RightDelta(p);
+Vector2 thumbPos = input.Pad(p).Is.ThumbSticks.Left;
+Vector2 thumbDelta = input.Pad(p).Is.ThumbSticks.RightDelta;
 // Or for the triggers (%pressed as float):
-float triggerPos = input.Pad.Is.Triggers.Right();
-float triggerDelta = input.Pad.Is.Triggers.LeftDelta();
+float triggerPos = input.Pad().Is.Triggers.Right;
+float triggerDelta = input.Pad(PlayerIndex.Four).Is.Triggers.LeftDelta;
 ...
 ```
 

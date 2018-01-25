@@ -25,10 +25,12 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
+using System;
 using InputStateManager.Inputs;
 using InputStateManager.Inputs.InputProviders.Implementations;
 using InputStateManager.Inputs.InputProviders.Interfaces;
 using JetBrains.Annotations;
+using Microsoft.Xna.Framework;
 
 namespace InputStateManager
 {
@@ -37,14 +39,15 @@ namespace InputStateManager
     {
         public Key Key { get; }
         public Mouse Mouse { get; }
-        public Pad Pad { get; }
+        private Pad[] pads;
+        public Pad Pad(PlayerIndex p = PlayerIndex.One) => pads[(int)p];
         public Touch Touch { get; }
 
         public InputManager()
         {
             Key = new Key(new XnaKeyInputProvider());
             Mouse = new Mouse(new XnaMouseInputProvider());
-            Pad = new Pad(new XnaPadInputProvider());
+            SetProviderForPads(new XnaPadInputProvider());
             Touch = new Touch(new XnaTouchInputProvider());
         }
 
@@ -56,15 +59,28 @@ namespace InputStateManager
         {
             Key = new Key(keyInputProvider);
             Mouse = new Mouse(mouseInputProvider);
-            Pad = new Pad(padInputProvider);
+            SetProviderForPads(padInputProvider);
             Touch = new Touch(touchInputProvider);
+        }
+
+        private void SetProviderForPads(IPadInputProvider provider)
+        {
+            var players = Enum.GetNames(typeof(PlayerIndex));
+            pads = new Pad[players.Length];
+            for (var i = 0; i < players.Length; i++)
+            {
+                pads[i] = new Pad((PlayerIndex)i,  provider);
+            }
         }
 
         public void Update()
         {
             Mouse.Update();
             Key.Update();
-            Pad.Update();
+            foreach (var pad in pads)
+            {
+                pad.Update();
+            }
             Touch.Update();
         }
     }

@@ -37,8 +37,8 @@ namespace InputStateManager.Inputs
     {
         private IKeyInputProvider provider;
 
-        public KeyboardState OldState { get; set; }
-        public KeyboardState State { get; set; }
+        public KeyboardState OldState { get; private set; }
+        public KeyboardState State { get; private set; }
 
         /// <summary>
         ///     Gets information about the current state. Including calculated delta values.

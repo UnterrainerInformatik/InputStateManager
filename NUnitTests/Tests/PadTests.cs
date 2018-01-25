@@ -85,30 +85,30 @@ namespace NUnitTests.Tests
                 .Returns(IdleState)
                 .Returns(IdleState);
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Connected());
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Two));
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Three));
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Four));
+            Assert.IsTrue(input.Pad().Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Two).Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Three).Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Four).Is.Connected);
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Connected());
-            Assert.IsTrue(input.Pad.Is.Connected(PlayerIndex.Two));
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Three));
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Four));
+            Assert.IsFalse(input.Pad().Is.Connected);
+            Assert.IsTrue(input.Pad(PlayerIndex.Two).Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Three).Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Four).Is.Connected);
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Connected());
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Two));
-            Assert.IsTrue(input.Pad.Is.Connected(PlayerIndex.Three));
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Four));
+            Assert.IsFalse(input.Pad().Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Two).Is.Connected);
+            Assert.IsTrue(input.Pad(PlayerIndex.Three).Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Four).Is.Connected);
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Connected());
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Two));
-            Assert.IsFalse(input.Pad.Is.Connected(PlayerIndex.Three));
-            Assert.IsTrue(input.Pad.Is.Connected(PlayerIndex.Four));
+            Assert.IsFalse(input.Pad().Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Two).Is.Connected);
+            Assert.IsFalse(input.Pad(PlayerIndex.Three).Is.Connected);
+            Assert.IsTrue(input.Pad(PlayerIndex.Four).Is.Connected);
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Connected());
-            Assert.IsTrue(input.Pad.Is.Connected(PlayerIndex.Two));
-            Assert.IsTrue(input.Pad.Is.Connected(PlayerIndex.Three));
-            Assert.IsTrue(input.Pad.Is.Connected(PlayerIndex.Four));
+            Assert.IsTrue(input.Pad().Is.Connected);
+            Assert.IsTrue(input.Pad(PlayerIndex.Two).Is.Connected);
+            Assert.IsTrue(input.Pad(PlayerIndex.Three).Is.Connected);
+            Assert.IsTrue(input.Pad(PlayerIndex.Four).Is.Connected);
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace NUnitTests.Tests
             providerMock.SetupSequence(o => o.GetState(0))
                 .Returns(GetStateB(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Down(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Down(Buttons.A));
         }
         /*
         [Test]
@@ -126,7 +126,7 @@ namespace NUnitTests.Tests
             providerMock.SetupSequence(o => o.GetState(0))
                 .Returns(GetStateB(Buttons.A | Buttons.B));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Down(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.Down(Buttons.A, Buttons.B));
         }
         
         [Test]
@@ -135,7 +135,7 @@ namespace NUnitTests.Tests
             providerMock.SetupSequence(o => o.GetState(0))
                 .Returns(GetStateB(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.OneDown(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.OneDown(Buttons.A, Buttons.B));
         }*/
 
         [Test]
@@ -146,11 +146,11 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A))
                 .Returns(IdleState);
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Down(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Down(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Down(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Down(Buttons.A));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Down(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Down(Buttons.A));
         }
 
         [Test]
@@ -160,9 +160,9 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A))
                 .Returns(IdleState);
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Up(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Up(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Up(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Up(Buttons.A));
         }
 
         /*
@@ -173,9 +173,9 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A | Buttons.B))
                 .Returns(IdleState);
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Up(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.Up(Buttons.A, Buttons.B));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Up(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.Up(Buttons.A, Buttons.B));
         }
 
         [Test]
@@ -185,9 +185,9 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A))
                 .Returns(IdleState);
             input.Update();
-            Assert.IsTrue(input.Pad.Is.OneUp(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.OneUp(Buttons.A, Buttons.B));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.OneUp(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.OneUp(Buttons.A, Buttons.B));
         }
         */
         [Test]
@@ -198,11 +198,11 @@ namespace NUnitTests.Tests
                 .Returns(IdleState)
                 .Returns(GetStateB(Buttons.A));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Up(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Up(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Up(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Up(Buttons.A));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Up(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Up(Buttons.A));
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace NUnitTests.Tests
             providerMock.SetupSequence(o => o.GetState(0))
                 .Returns(GetStateB(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Press(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Press(Buttons.A));
         }
 
         [Test]
@@ -221,9 +221,9 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A))
                 .Returns(IdleState);
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Press(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Press(Buttons.A));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Press(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Press(Buttons.A));
         }
 
         [Test]
@@ -233,9 +233,9 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A))
                 .Returns(GetStateB(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Press(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Press(Buttons.A));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Press(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Press(Buttons.A));
         }
 
         [Test]
@@ -246,11 +246,11 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A))
                 .Returns(IdleState);
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Release(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Release(Buttons.A));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Release(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Release(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Release(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Release(Buttons.A));
         }
 
         [Test]
@@ -261,11 +261,11 @@ namespace NUnitTests.Tests
                 .Returns(IdleState)
                 .Returns(IdleState);
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Release(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Release(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Release(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Release(Buttons.A));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Press(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Press(Buttons.A));
         }
 
         [Test]
@@ -275,11 +275,11 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A))
                 .Returns(IdleState);
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Down(Buttons.A));
-            Assert.IsFalse(input.Pad.Was.Down(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Down(Buttons.A));
+            Assert.IsFalse(input.Pad().Was.Down(Buttons.A));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Down(Buttons.A));
-            Assert.IsTrue(input.Pad.Was.Down(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Down(Buttons.A));
+            Assert.IsTrue(input.Pad().Was.Down(Buttons.A));
         }
 
         [Test]
@@ -289,11 +289,11 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A))
                 .Returns(IdleState);
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Up(Buttons.A));
-            Assert.IsTrue(input.Pad.Was.Up(Buttons.A));
+            Assert.IsFalse(input.Pad().Is.Up(Buttons.A));
+            Assert.IsTrue(input.Pad().Was.Up(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Up(Buttons.A));
-            Assert.IsFalse(input.Pad.Was.Up(Buttons.A));
+            Assert.IsTrue(input.Pad().Is.Up(Buttons.A));
+            Assert.IsFalse(input.Pad().Was.Up(Buttons.A));
         }
 
         /*
@@ -304,11 +304,11 @@ namespace NUnitTests.Tests
                         .Returns(GetStateB(Buttons.A | Buttons.B))
                         .Returns(IdleState);
                     input.Update();
-                    Assert.IsTrue(input.Pad.Is.Down(Buttons.A, Buttons.B));
-                    Assert.IsFalse(input.Pad.Was.Down(Buttons.A, Buttons.B));
+                    Assert.IsTrue(input.Pad().Is.Down(Buttons.A, Buttons.B));
+                    Assert.IsFalse(input.Pad().Was.Down(Buttons.A, Buttons.B));
                     input.Update();
-                    Assert.IsFalse(input.Pad.Is.Down(Buttons.A, Buttons.B));
-                    Assert.IsTrue(input.Pad.Was.Down(Buttons.A, Buttons.B));
+                    Assert.IsFalse(input.Pad().Is.Down(Buttons.A, Buttons.B));
+                    Assert.IsTrue(input.Pad().Was.Down(Buttons.A, Buttons.B));
                 }
 
                 [Test]
@@ -318,11 +318,11 @@ namespace NUnitTests.Tests
                         .Returns(GetStateB(Buttons.A | Buttons.B))
                         .Returns(IdleState);
                     input.Update();
-                    Assert.IsFalse(input.Pad.Is.Up(Buttons.A, Buttons.B));
-                    Assert.IsTrue(input.Pad.Was.Up(Buttons.A, Buttons.B));
+                    Assert.IsFalse(input.Pad().Is.Up(Buttons.A, Buttons.B));
+                    Assert.IsTrue(input.Pad().Was.Up(Buttons.A, Buttons.B));
                     input.Update();
-                    Assert.IsTrue(input.Pad.Is.Up(Buttons.A, Buttons.B));
-                    Assert.IsFalse(input.Pad.Was.Up(Buttons.A, Buttons.B));
+                    Assert.IsTrue(input.Pad().Is.Up(Buttons.A, Buttons.B));
+                    Assert.IsFalse(input.Pad().Was.Up(Buttons.A, Buttons.B));
                 }
 
         [Test]
@@ -332,15 +332,15 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A| Buttons.B))
                 .Returns(GetStateB(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.Press(Buttons.A, Buttons.B));
-            Assert.IsFalse(input.Pad.Is.Release(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.Press(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.Release(Buttons.A, Buttons.B));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Press(Buttons.A, Buttons.B));
-            Assert.IsFalse(input.Pad.Is.Release(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.Press(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.Release(Buttons.A, Buttons.B));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.Press(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.Press(Buttons.A, Buttons.B));
             // A and B were not released at once.
-            Assert.IsFalse(input.Pad.Is.Release(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.Release(Buttons.A, Buttons.B));
         }
 
         [Test]
@@ -351,17 +351,17 @@ namespace NUnitTests.Tests
                 .Returns(GetStateB(Buttons.A | Buttons.B))
                 .Returns(GetStateB(Buttons.A));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.OnePress(Buttons.A, Buttons.B));
-            Assert.IsFalse(input.Pad.Is.OneRelease(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.OnePress(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.OneRelease(Buttons.A, Buttons.B));
             input.Update();
-            Assert.IsTrue(input.Pad.Is.OnePress(Buttons.A, Buttons.B));
-            Assert.IsFalse(input.Pad.Is.OneRelease(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.OnePress(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.OneRelease(Buttons.A, Buttons.B));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.OnePress(Buttons.A, Buttons.B));
-            Assert.IsTrue(input.Pad.Is.OneRelease(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.OnePress(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.OneRelease(Buttons.A, Buttons.B));
             input.Update();
-            Assert.IsFalse(input.Pad.Is.OnePress(Buttons.A, Buttons.B));
-            Assert.IsTrue(input.Pad.Is.OneRelease(Buttons.A, Buttons.B));
+            Assert.IsFalse(input.Pad().Is.OnePress(Buttons.A, Buttons.B));
+            Assert.IsTrue(input.Pad().Is.OneRelease(Buttons.A, Buttons.B));
         }*/
     }
 }

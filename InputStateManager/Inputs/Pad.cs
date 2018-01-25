@@ -26,7 +26,6 @@
 // ***************************************************************************
 
 using System;
-using InputStateManager.Inputs.GamePad;
 using InputStateManager.Inputs.InputProviders.Interfaces;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
@@ -47,10 +46,10 @@ namespace InputStateManager.Inputs
 
         private IPadInputProvider provider;
 
-        private GamePadStates GamePadStates { get; set; }
-        public GamePadState OldState(PlayerIndex p = PlayerIndex.One) => GamePadStates.GetOld(p);
-        public GamePadState State(PlayerIndex p = PlayerIndex.One) => GamePadStates.Get(p);
-
+        public PlayerIndex PlayerIndex;
+        public GamePadState OldState { get; private set; }
+        public GamePadState State { get; private set; }
+        
         /// <summary>
         ///     Gets information about the current state. Including calculated delta values.
         /// </summary>
@@ -61,26 +60,32 @@ namespace InputStateManager.Inputs
         /// </summary>
         public WasSub Was { get; }
 
-        internal Pad(IPadInputProvider provider)
+        internal Pad(PlayerIndex playerIndex, IPadInputProvider provider)
         {
+            PlayerIndex = playerIndex;
             this.provider = provider;
-            GamePadStates = new GamePadStates(provider);
-            Is = new IsSub(GamePadStates.Get, GamePadStates.GetOld);
-            Was = new WasSub(GamePadStates.GetOld);
+            Is = new IsSub(GetState, GetOldState);
+            Was = new WasSub(GetOldState);
         }
+
+        internal GamePadState GetState() => State;
+        internal GamePadState GetOldState() => OldState;
 
         internal void Update()
         {
-            GamePadStates.Update();
+            if (provider == null)
+                return;
+            OldState = State;
+            State = provider.GetState((int)PlayerIndex);
         }
 
         [PublicAPI]
         public class IsSub : WasSub
         {
-            private Func<PlayerIndex, GamePadState> State { get; set; }
-            private Func<PlayerIndex, GamePadState> OldState { get; set; }
+            private Func<GamePadState> State { get; set; }
+            private Func<GamePadState> OldState { get; set; }
 
-            internal IsSub(Func<PlayerIndex, GamePadState> mapping, Func<PlayerIndex, GamePadState> oldMapping) : base(mapping)
+            internal IsSub(Func<GamePadState> mapping, Func<GamePadState> oldMapping) : base(mapping)
             {
                 State = mapping;
                 OldState = oldMapping;
@@ -90,25 +95,25 @@ namespace InputStateManager.Inputs
             }
 
             public bool Press(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => State(p).IsButtonDown(button) && OldState(p).IsButtonUp(button);
+                => State().IsButtonDown(button) && OldState().IsButtonUp(button);
 
             public bool Release(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => OldState(p).IsButtonDown(button) && State(p).IsButtonUp(button);
+                => OldState().IsButtonDown(button) && State().IsButtonUp(button);
 
             public new DPadSub DPad { get; }
             public new ThumbSticksSub ThumbSticks;
             public new TriggersSub Triggers;
             
-            public bool JustConnected(PlayerIndex p = PlayerIndex.One)
-                => !OldState(p).IsConnected && State(p).IsConnected;
+            public bool JustConnected
+                => !OldState().IsConnected && State().IsConnected;
         }
 
         [PublicAPI]
         public class WasSub
         {
-            private Func<PlayerIndex, GamePadState> State { get; set; }
+            private Func<GamePadState> State { get; set; }
 
-            internal WasSub(Func<PlayerIndex, GamePadState> mapping)
+            internal WasSub(Func<GamePadState> mapping)
             {
                 State = mapping;
                 DPad = new DPadOldSub(State);
@@ -116,34 +121,34 @@ namespace InputStateManager.Inputs
                 Triggers = new TriggersOldSub(State);
             }
 
-            public bool Connected(PlayerIndex p = PlayerIndex.One) => State(p).IsConnected;
+            public bool Connected => State().IsConnected;
 
-            public GamePadButtons Buttons(PlayerIndex p = PlayerIndex.One) => State(p).Buttons;
+            public GamePadButtons Buttons => State().Buttons;
 
             public bool Down(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => State(p).IsButtonDown(button);
+                => State().IsButtonDown(button);
 
             public bool Up(Buttons button, PlayerIndex p = PlayerIndex.One)
-                => State(p).IsButtonUp(button);
+                => State().IsButtonUp(button);
 
-            public GamePadDPad DPadValues(PlayerIndex p = PlayerIndex.One) => State(p).DPad;
+            public GamePadDPad DPadValues => State().DPad;
             public DPadOldSub DPad { get; }
 
-            public GamePadThumbSticks ThumbSticksValues(PlayerIndex p = PlayerIndex.One) => State(p).ThumbSticks;
+            public GamePadThumbSticks ThumbSticksValues => State().ThumbSticks;
             public ThumbSticksOldSub ThumbSticks;
 
-            public GamePadTriggers TriggersValues(PlayerIndex p = PlayerIndex.One) => State(p).Triggers;
+            public GamePadTriggers TriggersValues => State().Triggers;
             public TriggersOldSub Triggers;
 
-            public int PacketNumber(PlayerIndex p = PlayerIndex.One) => State(p).PacketNumber;
+            public int PacketNumber => State().PacketNumber;
         }
 
         [PublicAPI]
         public class DPadSub : DPadOldSub
         {
-            private Func<PlayerIndex, GamePadState> OldState { get; set; }
+            private Func<GamePadState> OldState { get; set; }
 
-            public DPadSub(Func<PlayerIndex, GamePadState> mapping, Func<PlayerIndex, GamePadState> oldMapping)
+            public DPadSub(Func<GamePadState> mapping, Func<GamePadState> oldMapping)
                 : base(mapping)
             {
                 OldState = oldMapping;
@@ -159,9 +164,9 @@ namespace InputStateManager.Inputs
         [PublicAPI]
         public class DPadOldSub
         {
-            protected Func<PlayerIndex, GamePadState> State { get; set; }
+            protected Func<GamePadState> State { get; set; }
 
-            internal DPadOldSub(Func<PlayerIndex, GamePadState> mapping)
+            internal DPadOldSub(Func<GamePadState> mapping)
             {
                 State = mapping;
             }
@@ -169,37 +174,37 @@ namespace InputStateManager.Inputs
             public bool Down(DPadDirection direction, PlayerIndex p = PlayerIndex.One) => Down(State, direction, p);
             public bool Up(DPadDirection direction, PlayerIndex p = PlayerIndex.One) => Up(State, direction, p);
 
-            protected bool Down(Func<PlayerIndex, GamePadState> mapping, DPadDirection direction,
+            protected bool Down(Func<GamePadState> mapping, DPadDirection direction,
                 PlayerIndex p = PlayerIndex.One)
             {
                 switch (direction)
                 {
                     case DPadDirection.DOWN:
-                        return mapping(p).DPad.Down == ButtonState.Pressed;
+                        return mapping().DPad.Down == ButtonState.Pressed;
                     case DPadDirection.LEFT:
-                        return mapping(p).DPad.Left == ButtonState.Pressed;
+                        return mapping().DPad.Left == ButtonState.Pressed;
                     case DPadDirection.RIGHT:
-                        return mapping(p).DPad.Right == ButtonState.Pressed;
+                        return mapping().DPad.Right == ButtonState.Pressed;
                     case DPadDirection.UP:
-                        return mapping(p).DPad.Up == ButtonState.Pressed;
+                        return mapping().DPad.Up == ButtonState.Pressed;
                 }
 
                 return false;
             }
 
-            protected bool Up(Func<PlayerIndex, GamePadState> mapping, DPadDirection direction,
+            protected bool Up(Func<GamePadState> mapping, DPadDirection direction,
                 PlayerIndex p = PlayerIndex.One)
             {
                 switch (direction)
                 {
                     case DPadDirection.DOWN:
-                        return mapping(p).DPad.Down == ButtonState.Released;
+                        return mapping().DPad.Down == ButtonState.Released;
                     case DPadDirection.LEFT:
-                        return mapping(p).DPad.Left == ButtonState.Released;
+                        return mapping().DPad.Left == ButtonState.Released;
                     case DPadDirection.RIGHT:
-                        return mapping(p).DPad.Right == ButtonState.Released;
+                        return mapping().DPad.Right == ButtonState.Released;
                     case DPadDirection.UP:
-                        return mapping(p).DPad.Up == ButtonState.Released;
+                        return mapping().DPad.Up == ButtonState.Released;
                 }
 
                 return false;
@@ -209,59 +214,59 @@ namespace InputStateManager.Inputs
         [PublicAPI]
         public class ThumbSticksSub : ThumbSticksOldSub
         {
-            private Func<PlayerIndex, GamePadState> OldState { get; set; }
+            private Func<GamePadState> OldState { get; set; }
 
-            public ThumbSticksSub(Func<PlayerIndex, GamePadState> mapping, Func<PlayerIndex, GamePadState> oldMapping)
+            public ThumbSticksSub(Func<GamePadState> mapping, Func<GamePadState> oldMapping)
                 : base(mapping)
             {
                 OldState = oldMapping;
             }
 
-            public Vector2 LeftDelta(PlayerIndex p = PlayerIndex.One) => Left(p) - OldState(p).ThumbSticks.Left;
-            public Vector2 RightDelta(PlayerIndex p = PlayerIndex.One) => Right(p) - OldState(p).ThumbSticks.Right;
+            public Vector2 LeftDelta => Left - OldState().ThumbSticks.Left;
+            public Vector2 RightDelta => Right - OldState().ThumbSticks.Right;
         }
 
         [PublicAPI]
         public class ThumbSticksOldSub
         {
-            protected Func<PlayerIndex, GamePadState> State { get; set; }
+            protected Func<GamePadState> State { get; set; }
 
-            internal ThumbSticksOldSub(Func<PlayerIndex, GamePadState> mapping)
+            internal ThumbSticksOldSub(Func<GamePadState> mapping)
             {
                 State = mapping;
             }
 
-            public Vector2 Left(PlayerIndex p = PlayerIndex.One) => State(p).ThumbSticks.Left;
-            public Vector2 Right(PlayerIndex p = PlayerIndex.One) => State(p).ThumbSticks.Right;
+            public Vector2 Left => State().ThumbSticks.Left;
+            public Vector2 Right => State().ThumbSticks.Right;
         }
 
         [PublicAPI]
         public class TriggersSub : TriggersOldSub
         {
-            private Func<PlayerIndex, GamePadState> OldState { get; set; }
+            private Func<GamePadState> OldState { get; set; }
 
-            public TriggersSub(Func<PlayerIndex, GamePadState> mapping, Func<PlayerIndex, GamePadState> oldMapping)
+            public TriggersSub(Func<GamePadState> mapping, Func<GamePadState> oldMapping)
                 : base(mapping)
             {
                 OldState = oldMapping;
             }
 
-            public float LeftDelta(PlayerIndex p = PlayerIndex.One) => Left(p) - OldState(p).Triggers.Left;
-            public float RightDelta(PlayerIndex p = PlayerIndex.One) => Right(p) - OldState(p).Triggers.Right;
+            public float LeftDelta => Left - OldState().Triggers.Left;
+            public float RightDelta => Right - OldState().Triggers.Right;
         }
 
         [PublicAPI]
         public class TriggersOldSub
         {
-            protected Func<PlayerIndex, GamePadState> State { get; set; }
+            protected Func<GamePadState> State { get; set; }
 
-            internal TriggersOldSub(Func<PlayerIndex, GamePadState> mapping)
+            internal TriggersOldSub(Func<GamePadState> mapping)
             {
                 State = mapping;
             }
 
-            public float Left(PlayerIndex p = PlayerIndex.One) => State(p).Triggers.Left;
-            public float Right(PlayerIndex p = PlayerIndex.One) => State(p).Triggers.Right;
+            public float Left => State().Triggers.Left;
+            public float Right => State().Triggers.Right;
         }
     }
 }

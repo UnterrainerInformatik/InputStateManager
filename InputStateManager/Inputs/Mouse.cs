@@ -47,8 +47,8 @@ namespace InputStateManager.Inputs
 
         private IMouseInputProvider provider;
 
-        public MouseState OldState { get; set; }
-        public MouseState State { get; set; }
+        public MouseState OldState { get; private set; }
+        public MouseState State { get; private set; }
 
         /// <summary>
         ///     Gets information about the current state. Including calculated delta values.
