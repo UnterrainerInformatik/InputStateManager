@@ -157,10 +157,8 @@ namespace InputStateManager.Inputs
             public bool Down(params Buttons[] buttons)
             {
                 foreach (var button in buttons)
-                {
                     if (State().IsButtonUp(button))
                         return false;
-                }
 
                 return true;
             }
@@ -168,10 +166,8 @@ namespace InputStateManager.Inputs
             public bool OneDown(params Buttons[] buttons)
             {
                 foreach (var button in buttons)
-                {
                     if (State().IsButtonDown(button))
                         return true;
-                }
 
                 return false;
             }
@@ -179,10 +175,8 @@ namespace InputStateManager.Inputs
             public bool Up(params Buttons[] buttons)
             {
                 foreach (var button in buttons)
-                {
                     if (State().IsButtonDown(button))
                         return false;
-                }
 
                 return true;
             }
@@ -190,10 +184,8 @@ namespace InputStateManager.Inputs
             public bool OneUp(params Buttons[] buttons)
             {
                 foreach (var button in buttons)
-                {
                     if (State().IsButtonUp(button))
                         return true;
-                }
 
                 return false;
             }
@@ -221,11 +213,37 @@ namespace InputStateManager.Inputs
                 OldState = oldMapping;
             }
 
-            public bool Press(DPadDirection direction)
-                => Down(State, direction) && Up(OldState, direction);
+            public bool Press(params DPadDirection[] directions)
+            {
+                foreach (var direction in directions)
+                    if (Up(State, direction) || Down(OldState, direction))
+                        return false;
+                return true;
+            }
 
-            public bool Release(DPadDirection direction)
-                => Down(OldState, direction) && Up(State, direction);
+            public bool OnePress(params DPadDirection[] directions)
+            {
+                foreach (var direction in directions)
+                    if (Down(State, direction) && Up(OldState, direction))
+                        return true;
+                return false;
+            }
+
+            public bool Release(params DPadDirection[] directions)
+            {
+                foreach (var direction in directions)
+                    if (Up(OldState, direction) || Down(State, direction))
+                        return false;
+                return true;
+            }
+
+            public bool OneRelease(params DPadDirection[] directions)
+            {
+                foreach (var direction in directions)
+                    if (Down(OldState, direction) && Up(State, direction))
+                        return true;
+                return false;
+            }
         }
 
         [PublicAPI]
@@ -238,11 +256,39 @@ namespace InputStateManager.Inputs
                 State = mapping;
             }
 
-            public bool Down(DPadDirection direction) => Down(State, direction);
-            public bool Up(DPadDirection direction) => Up(State, direction);
+            public bool Down(params DPadDirection[] directions)
+            {
+                foreach (var direction in directions)
+                    if (Up(State, direction))
+                        return false;
+                return true;
+            }
 
-            protected bool Down(Func<GamePadState> mapping, DPadDirection direction,
-                PlayerIndex p = PlayerIndex.One)
+            public bool OneDown(params DPadDirection[] directions)
+            {
+                foreach (var direction in directions)
+                    if (Down(State, direction))
+                        return true;
+                return false;
+            }
+
+            public bool Up(params DPadDirection[] directions)
+            {
+                foreach (var direction in directions)
+                    if (Down(State, direction))
+                        return false;
+                return true;
+            }
+
+            public bool OneUp(params DPadDirection[] directions)
+            {
+                foreach (var direction in directions)
+                    if (Up(State, direction))
+                        return true;
+                return false;
+            }
+
+            protected bool Down(Func<GamePadState> mapping, DPadDirection direction)
             {
                 switch (direction)
                 {
@@ -254,9 +300,9 @@ namespace InputStateManager.Inputs
                         return mapping().DPad.Right == ButtonState.Pressed;
                     case DPadDirection.UP:
                         return mapping().DPad.Up == ButtonState.Pressed;
+                    default:
+                        return false;
                 }
-
-                return false;
             }
 
             protected bool Up(Func<GamePadState> mapping, DPadDirection direction)
@@ -271,9 +317,9 @@ namespace InputStateManager.Inputs
                         return mapping().DPad.Right == ButtonState.Released;
                     case DPadDirection.UP:
                         return mapping().DPad.Up == ButtonState.Released;
+                    default:
+                        return false;
                 }
-
-                return false;
             }
         }
 
