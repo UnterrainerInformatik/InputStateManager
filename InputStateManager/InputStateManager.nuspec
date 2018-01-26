@@ -22,7 +22,7 @@
     <summary>
       A helper PCL (InputStateManager) for MonoGame useful for querying keyboard, mouse, touch and gamepad inputs.
     </summary>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>Changes API slightly because it feels more natural and you may pass several buttons/buttonstates/etc at once (AND). Also adds OneXXX methods (OR).</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <language>en-US</language>
     <tags>monogame inputmanager inputstatemanager input inputstate keyboard mouse touchpanel gamepad pressed released</tags>

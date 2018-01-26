@@ -60,6 +60,7 @@
     <Compile Include="Inputs\Touch.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="InputStateManager.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
