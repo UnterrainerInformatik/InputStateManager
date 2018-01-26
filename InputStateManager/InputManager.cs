@@ -40,7 +40,8 @@ namespace InputStateManager
         public Key Key { get; }
         public Mouse Mouse { get; }
         private Pad[] pads;
-        public Pad Pad(PlayerIndex p = PlayerIndex.One) => pads[(int)p];
+        public Pad Pad(PlayerIndex playerIndex = PlayerIndex.One) => pads[(int)playerIndex];
+        public Pad Pad(int playerIndex) => pads[playerIndex];
         public Touch Touch { get; }
 
         public InputManager()

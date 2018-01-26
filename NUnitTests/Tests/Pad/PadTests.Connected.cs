@@ -32,11 +32,11 @@ using NUnit.Framework;
 namespace NUnitTests.Tests.Pad
 {
     [TestFixture]
-    [Category("InputStateManager.Pad.Others")]
+    [Category("InputStateManager.Pad.Connected")]
     public partial class PadTests
     {
         [Test]
-        public void OnlyOneGamepadIsConnected()
+        public void ConnectingGamepadsAreDetected()
         {
             providerMock.SetupSequence(o => o.GetState(0))
                 .Returns(IdleState)
@@ -79,14 +79,36 @@ namespace NUnitTests.Tests.Pad
             Assert.IsFalse(input.Pad(PlayerIndex.Four).Is.Connected);
             input.Update();
             Assert.IsFalse(input.Pad().Is.Connected);
-            Assert.IsFalse(input.Pad(PlayerIndex.Two).Is.Connected);
-            Assert.IsFalse(input.Pad(PlayerIndex.Three).Is.Connected);
-            Assert.IsTrue(input.Pad(PlayerIndex.Four).Is.Connected);
+            Assert.IsFalse(input.Pad(1).Is.Connected);
+            Assert.IsFalse(input.Pad(2).Is.Connected);
+            Assert.IsTrue(input.Pad(3).Is.Connected);
+            input.Update();
+            Assert.IsTrue(input.Pad(0).Is.Connected);
+            Assert.IsTrue(input.Pad(1).Is.Connected);
+            Assert.IsTrue(input.Pad(2).Is.Connected);
+            Assert.IsTrue(input.Pad(3).Is.Connected);
+        }
+
+        [Test]
+        public void JustConnectedWorks()
+        {
+            providerMock.SetupSequence(o => o.GetState(0))
+                .Returns(GamePadState.Default)
+                .Returns(IdleState)
+                .Returns(IdleState)
+                .Returns(GamePadState.Default);
+            input.Update();
+            Assert.IsFalse(input.Pad().Is.Connected);
+            Assert.IsFalse(input.Pad().Is.JustConnected);
             input.Update();
             Assert.IsTrue(input.Pad().Is.Connected);
-            Assert.IsTrue(input.Pad(PlayerIndex.Two).Is.Connected);
-            Assert.IsTrue(input.Pad(PlayerIndex.Three).Is.Connected);
-            Assert.IsTrue(input.Pad(PlayerIndex.Four).Is.Connected);
+            Assert.IsTrue(input.Pad().Is.JustConnected);
+            input.Update();
+            Assert.IsTrue(input.Pad().Is.Connected);
+            Assert.IsFalse(input.Pad().Is.JustConnected);
+            input.Update();
+            Assert.IsFalse(input.Pad().Is.Connected);
+            Assert.IsFalse(input.Pad().Is.JustConnected);
         }
     }
 }
