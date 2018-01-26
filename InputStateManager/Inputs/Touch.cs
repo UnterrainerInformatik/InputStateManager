@@ -71,7 +71,7 @@ namespace InputStateManager.Inputs
 
         public bool EmulateWithMouse
         {
-            get => emulateWithMouse;
+            get { return emulateWithMouse; }
             set
             {
                 if (!emulateWithMouse)
