@@ -65,6 +65,9 @@
     <Compile Include="Tests\Key\KeyTests.PressRelease.cs" />
     <Compile Include="Tests\Mouse\MouseTests.Was.cs" />
     <Compile Include="Tests\Mouse\MouseTests.PressRelease.cs" />
+    <Compile Include="Tests\Pad\PadTests.DPad.PressRelease.cs" />
+    <Compile Include="Tests\Pad\PadTests.DPad.ThumbSticks.cs" />
+    <Compile Include="Tests\Pad\PadTests.DPad.UpDown.cs" />
     <Compile Include="Tests\Pad\PadTests.Triggers.cs" />
     <Compile Include="Tests\Pad\PadTests.Connected.cs" />
     <Compile Include="Tests\Pad\PadTests.Was.cs" />

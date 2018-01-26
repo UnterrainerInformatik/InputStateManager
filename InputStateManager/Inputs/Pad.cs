@@ -135,6 +135,7 @@ namespace InputStateManager.Inputs
 
             public bool JustConnected
                 => !OldState().IsConnected && State().IsConnected;
+            public bool StateChanged => OldState().PacketNumber != PacketNumber;
         }
 
         [PublicAPI]
