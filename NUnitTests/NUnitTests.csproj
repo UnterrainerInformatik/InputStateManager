@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\Key\KeyTests.Others.cs" />
+    <Compile Include="Tests\Key\KeyTests.AltShiftCtrlCapsNum.cs" />
     <Compile Include="Tests\Key\KeyTests.Was.cs" />
     <Compile Include="Tests\Key\KeyTests.PressRelease.cs" />
     <Compile Include="Tests\Mouse\MouseTests.Was.cs" />

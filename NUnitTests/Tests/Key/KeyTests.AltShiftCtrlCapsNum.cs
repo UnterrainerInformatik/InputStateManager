@@ -31,7 +31,7 @@ using NUnit.Framework;
 namespace NUnitTests.Tests.Key
 {
     [TestFixture]
-    [Category("InputStateManager.Key.Others")]
+    [Category("InputStateManager.Key.AltShiftCtrlCapsNum")]
     public partial class KeyTests
     {
         [Test]
