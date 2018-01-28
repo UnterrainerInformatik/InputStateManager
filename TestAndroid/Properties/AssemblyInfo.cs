@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
 
@@ -9,8 +8,8 @@ using Android.App;
 [assembly: AssemblyTitle("TestAndroid")]
 [assembly: AssemblyProduct("TestAndroid")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyDescription("An InputStateManager test-project for Android testing touch-input.")]
+[assembly: AssemblyCompany("Unterrainer Informatik OG")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +20,7 @@ using Android.App;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d7673d60-4634-4c40-ad73-133fed2ef54e")]
+[assembly: Guid("02d121da-0872-4db0-9525-3b6b0c5995a8")]
 
 // Version information for an assembly consists of the following four values:
 //

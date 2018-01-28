@@ -27,13 +27,11 @@
 
 using System;
 using InputStateManager.Inputs.InputProviders.Interfaces;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace InputStateManager.Inputs
 {
-    [PublicAPI]
     public class Mouse
     {
         public enum Button
@@ -117,7 +115,6 @@ namespace InputStateManager.Inputs
             }
         }
 
-        [PublicAPI]
         public class IsSub : WasSub
         {
             private Func<MouseState> State { get; set; }
@@ -166,7 +163,6 @@ namespace InputStateManager.Inputs
             public int YDelta => State().Y - OldState().Y;
         }
 
-        [PublicAPI]
         public class WasSub
         {
             private Func<MouseState> State { get; set; }

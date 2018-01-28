@@ -40,8 +40,8 @@ namespace Test
     /// </summary>
     public class Game1 : Game
     {
-        public const int MIN_SCREEN_RESOLUTION_WIDTH = 1024;
-        public const int MIN_SCREEN_RESOLUTION_HEIGHT = 768;
+        public const int MIN_SCREEN_RESOLUTION_WIDTH = 800;
+        public const int MIN_SCREEN_RESOLUTION_HEIGHT = 480;
 
         private SpriteBatch spriteBatch;
         private SpriteFont font;

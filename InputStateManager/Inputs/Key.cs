@@ -27,12 +27,10 @@
 
 using System;
 using InputStateManager.Inputs.InputProviders.Interfaces;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Input;
 
 namespace InputStateManager.Inputs
 {
-    [PublicAPI]
     public class Key
     {
         private IKeyInputProvider provider;
@@ -69,7 +67,6 @@ namespace InputStateManager.Inputs
             State = provider.GetState();
         }
 
-        [PublicAPI]
         public class IsSub : WasSub
         {
             private Func<KeyboardState> State { get; set; }
@@ -128,7 +125,6 @@ namespace InputStateManager.Inputs
             public bool CapsLockStateExit => !State().CapsLock && OldState().CapsLock;
         }
 
-        [PublicAPI]
         public class WasSub
         {
             private Func<KeyboardState> State { get; set; }

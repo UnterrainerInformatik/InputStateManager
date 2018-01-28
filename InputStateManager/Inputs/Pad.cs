@@ -27,7 +27,6 @@
 
 using System;
 using InputStateManager.Inputs.InputProviders.Interfaces;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -36,7 +35,6 @@ namespace InputStateManager.Inputs
     /// <summary>
     ///     Relies on the PlayerIndex enumeration to get the number of valid inputs and their respecitve indexes.
     /// </summary>
-    [PublicAPI]
     public class Pad
     {
         public enum DPadDirection
@@ -82,7 +80,6 @@ namespace InputStateManager.Inputs
             State = provider.GetState((int) PlayerIndex);
         }
 
-        [PublicAPI]
         public class IsSub : WasSub
         {
             private Func<GamePadState> State { get; set; }
@@ -138,7 +135,6 @@ namespace InputStateManager.Inputs
             public bool StateChanged => OldState().PacketNumber != PacketNumber;
         }
 
-        [PublicAPI]
         public class WasSub
         {
             private Func<GamePadState> State { get; set; }
@@ -203,7 +199,6 @@ namespace InputStateManager.Inputs
             public int PacketNumber => State().PacketNumber;
         }
 
-        [PublicAPI]
         public class DPadSub : DPadOldSub
         {
             private Func<GamePadState> OldState { get; set; }
@@ -247,7 +242,6 @@ namespace InputStateManager.Inputs
             }
         }
 
-        [PublicAPI]
         public class DPadOldSub
         {
             protected Func<GamePadState> State { get; set; }
@@ -324,7 +318,6 @@ namespace InputStateManager.Inputs
             }
         }
 
-        [PublicAPI]
         public class ThumbSticksSub : ThumbSticksOldSub
         {
             private Func<GamePadState> OldState { get; set; }
@@ -339,7 +332,6 @@ namespace InputStateManager.Inputs
             public Vector2 RightDelta => Right - OldState().ThumbSticks.Right;
         }
 
-        [PublicAPI]
         public class ThumbSticksOldSub
         {
             protected Func<GamePadState> State { get; set; }
@@ -353,7 +345,6 @@ namespace InputStateManager.Inputs
             public Vector2 Right => State().ThumbSticks.Right;
         }
 
-        [PublicAPI]
         public class TriggersSub : TriggersOldSub
         {
             private Func<GamePadState> OldState { get; set; }
@@ -368,7 +359,6 @@ namespace InputStateManager.Inputs
             public float RightDelta => Right - OldState().Triggers.Right;
         }
 
-        [PublicAPI]
         public class TriggersOldSub
         {
             protected Func<GamePadState> State { get; set; }

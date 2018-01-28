@@ -29,12 +29,10 @@ using System;
 using InputStateManager.Inputs;
 using InputStateManager.Inputs.InputProviders.Implementations;
 using InputStateManager.Inputs.InputProviders.Interfaces;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 
 namespace InputStateManager
 {
-    [PublicAPI]
     public class InputManager
     {
         public Key Key { get; }

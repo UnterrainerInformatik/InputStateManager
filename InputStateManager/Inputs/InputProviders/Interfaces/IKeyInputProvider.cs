@@ -25,12 +25,10 @@
 // For more information, please refer to <http://unlicense.org>
 // ***************************************************************************
 
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Input;
 
 namespace InputStateManager.Inputs.InputProviders.Interfaces
 {
-    [PublicAPI]
     public interface IKeyInputProvider
     {
         KeyboardState GetState();

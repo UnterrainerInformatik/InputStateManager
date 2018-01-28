@@ -27,13 +27,11 @@
 
 using System;
 using InputStateManager.Inputs.InputProviders.Interfaces;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
 
 namespace InputStateManager.Inputs
 {
-    [PublicAPI]
     public class Touch
     {
         private ITouchInputProvider provider;
@@ -95,13 +93,11 @@ namespace InputStateManager.Inputs
             Is.Collection = provider.GetState();
         }
 
-        [PublicAPI]
         public class IsSub
         {
             public TouchCollection Collection { get; internal set; }
         }
 
-        [PublicAPI]
         public class WasSub
         {
             public TouchCollection Collection { get; internal set; }
